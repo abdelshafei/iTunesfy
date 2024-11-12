@@ -1,14 +1,14 @@
 <h2>Login as {{ userRole | titlecase }}</h2>
 <form (ngSubmit)="login()">
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="email" required>
+  <label>username:</label>
+  <input type="username" [(ngModel)]="username" required>
 
   <label>Password:</label>
   <input type="password" [(ngModel)]="password" required>
 
   <div *ngIf="userRole === 'artist'">
     <label>Authentication ID:</label>
-    <input type="int" [(ngModel)]="authentication_id" required>
+    <input type="INT" [(ngModel)]="authentication_id" required>
   </div>
 
   <button type="submit">Log In</button>

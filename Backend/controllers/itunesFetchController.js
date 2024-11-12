@@ -1,5 +1,5 @@
 const axios = require('axios');
-const db = require('../config/db');
+
 const searchTerms = require('../config/itunesTerms'); // Import hard-wired search terms
 
 // Function to fetch and save data for predefined search terms

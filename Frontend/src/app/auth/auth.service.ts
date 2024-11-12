@@ -11,7 +11,7 @@ export class AuthService {
   constructor(private http: HttpClient, private router: Router) {}
 
   // Login method
-  login(credentials: { username?: string; email: string; password: string; userType?: string | null; authentication_id?: string | null }) {
+  login(credentials: { username?: string; password: string; userType?: string | null; authentication_id?: string | null }) {
     return this.http.post(`${this.apiUrl}/auth/login`, credentials);
   }
 

@@ -10,7 +10,6 @@ import { Router } from '@angular/router';
 export class LoginComponent {
   userRole: string | null = localStorage.getItem('userRole');
   username = '';
-  email = '';
   password = '';
   authentication_id = '';
 
@@ -19,7 +18,6 @@ export class LoginComponent {
   login() {
     const loginData = {
       username: this.username,
-      email: this.email,
       password: this.password,
       userType: this.userRole,
       authentication_id: this.userRole === 'artist' ? this.authentication_id : null

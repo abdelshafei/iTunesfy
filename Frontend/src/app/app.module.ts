@@ -13,6 +13,7 @@ import { RegisterComponent } from './auth/register/register.component';
 import { RoleSelectionComponent } from './auth/role-selection/role-selection.component';
 import { AuthChoiceComponent } from './auth/auth-choice/auth-choice.component';
 
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -21,7 +22,7 @@ import { AuthChoiceComponent } from './auth/auth-choice/auth-choice.component';
     DashboardComponent,
     RegisterComponent,
     RoleSelectionComponent,
-    AuthChoiceComponent
+    AuthChoiceComponent,
   ],
   imports: [
     BrowserModule,
