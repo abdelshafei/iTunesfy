@@ -19,11 +19,9 @@ const app = express();
 app.use(express.json());
 
 // Use routes
-app.use('/auth', authRoutes);
-app.use('/playlists', playlistRoutes);
-app.use('/songs', songRoutes);
-app.use('/albums', albumRoutes);
-
+app.use('/api/itunes', itunesRoute); // Public route for fetching iTunes data
+app.use('/api/auth', authRoutes); // Public route for authentication
+app.use('/api/playlists', playlistRoutes);
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
