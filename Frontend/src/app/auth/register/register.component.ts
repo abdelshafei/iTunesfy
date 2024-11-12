@@ -3,36 +3,39 @@ import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
 
 @Component({
-  selector: 'app-login',
-  templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css']
+  selector: 'app-register',
+  templateUrl: './register.component.html',
+  styleUrls: ['./register.component.css']
 })
-export class LoginComponent {
+export class RegisterComponent {
   userRole: string | null = localStorage.getItem('userRole');
-  username = '';
+  userName = '';
   email = '';
   password = '';
-  authentication_id = '';
+  country = '';
+  style = ''; // Only for artists
+  authentication_id = '' //Only for artists
 
   constructor(private authService: AuthService, private router: Router) {}
 
-  login() {
-    const loginData = {
-      username: this.username,
+  register() {
+    const registerData = {
+      userName: this.userName,
       email: this.email,
       password: this.password,
+      country: this.country,
       userType: this.userRole,
+      style: this.userRole === 'artist' ? this.style : null,
       authentication_id: this.userRole === 'artist' ? this.authentication_id : null
     };
 
-    this.authService.login(loginData).subscribe({
+    this.authService.register(registerData).subscribe({
       next: (res: any) => {
         alert(res.message);
-        localStorage.setItem('authToken', res.token); // Save the token
-        this.router.navigate(['/dashboard']); // Redirect to dashboard after login
+        this.router.navigate(['/login']); // Redirect to login after successful registration
       },
       error: (err) => {
-        alert('Login failed');
+        alert('Registration failed');
       }
     });
   }

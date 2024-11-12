@@ -1,0 +1,23 @@
+<h2>Register as {{ userRole | titlecase }}</h2>
+<form (ngSubmit)="register()">
+  <label>Username:</label>
+  <input type="text" [(ngModel)]="userName" required>
+
+  <label>Email:</label>
+  <input type="email" [(ngModel)]="email" required>
+
+  <label>Password:</label>
+  <input type="password" [(ngModel)]="password" required>
+
+  <label>Country:</label>
+  <input type="text" [(ngModel)]="country" required>
+
+  <div *ngIf="userRole === 'artist'">
+    <label>Music Style:</label>
+    <input type="text" [(ngModel)]="style" required>
+    <label>Authentication ID:</label>
+    <input type="int" [(ngModel)]="authentication_id" required>
+  </div>
+
+  <button type="submit">Register</button>
+</form>

@@ -58,3 +58,11 @@ CREATE TABLE IF NOT EXISTS Playlist_Song {
     FOREIGN KEY (song_id) REFERENCES Song(song_id),
     FOREIGN KEY (playlist_name) REFERENCES PlayList(playlist_name)
 }
+
+
+CREATE TABLE IF NOT EXISTS Auth_ids {
+    Auth_id  INTEGER PRIMARY KEY NOT NULL
+}
+INSERT OR IGNORE Auth_ids(Auth_id) {
+    
+}
