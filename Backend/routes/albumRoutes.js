@@ -4,7 +4,7 @@ const authMiddleware = require('../middleware/authMiddleware'); // Import auth m
 const router = express.Router();
 
 // Protected route to create a playlist - requires authentication
-router.post('/create', authMiddleware, albumController.createAlbum);
+router.post('/create/:artistId', authMiddleware, albumController.createAlbum);
 
 // Protected route to get a user's playlists
 router.get('artist/:artistId', authMiddleware, albumController.getUserAlbum);

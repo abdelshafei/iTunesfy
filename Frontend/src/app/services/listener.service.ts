@@ -6,15 +6,15 @@ import { Observable } from 'rxjs';
   providedIn: 'root'
 })
 export class ListenerService {
-  private apiUrl = '/api';
+  private apiUrl = "/api";
 
   constructor(private http: HttpClient) {}
 
   getPlaylists(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/playlists/ownPlaylist/${userId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/ownPlaylist/${localStorage.getItem('username')}`);
   }
 
   getLikedPlaylists(userId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/playlists/liked-playlists/${userId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/liked-playlists/${localStorage.getItem('username')}`);
   }
 }

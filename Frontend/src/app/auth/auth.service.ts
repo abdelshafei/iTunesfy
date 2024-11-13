@@ -22,12 +22,12 @@ export class AuthService {
 
   // Logout method
   logout() {
-    localStorage.removeItem('token');
+    localStorage.removeItem('authToken');
     this.router.navigate(['/login']);
   }
 
   // Check if user is authenticated
   isAuthenticated(): boolean {
-    return !!localStorage.getItem('token');
+    return !!localStorage.getItem('authToken');
   }
 }

@@ -2,9 +2,9 @@ const db = require('../config/db');
 
 exports.createAlbum = async (req, res) => {
     try {
-      // Extract album data from client request (e.g., title, artist ID)
-      const { albumTitle, authentication_id} = req.body;
-  
+      const albumTitle = req.body;
+      const artistId = req.params.artistId;
+
       // Basic validation to ensure necessary data is present
       if (!albumTitle || !authentication_id) {
         return res.status(400).json({ message: "Album title and artist ID are required." });
@@ -32,11 +32,6 @@ exports.createAlbum = async (req, res) => {
 
 exports.getAlbumsByArtist = (req, res) => {
     const artistId = req.params.artistId;
-  
-    // Check if artistId is provided
-    if (!artistId) {
-      return res.status(400).json({ message: "Artist ID is required" });
-    }
   
     // Query to retrieve albums by artist ID
     const query = `SELECT * FROM Album WHERE authentication_id = ?`;

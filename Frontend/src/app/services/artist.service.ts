@@ -11,6 +11,6 @@ export class ArtistService {
   constructor(private http: HttpClient) {}
 
   getAlbums(artistId: string): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/albums/artist/${artistId}`);
+    return this.http.get<any[]>(`${this.apiUrl}/albums/artist/${localStorage.getItem("AuthId")}`);
   }
 }
