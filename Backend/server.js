@@ -24,6 +24,7 @@ app.use('/api/itunes', itunesRoute); // Public route for fetching iTunes data
 app.use('/api/auth', authRoutes); // Public route for authentication
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/albums', albumRoutes);
+app.use('/api/songs', songsRoute)
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

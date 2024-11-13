@@ -1,6 +1,5 @@
 const db = require('../config/db');
 
-
 exports.createAlbum = async (req, res) => {
     try {
       // Extract album data from client request (e.g., title, artist ID)

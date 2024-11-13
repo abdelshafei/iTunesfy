@@ -1,1 +1,53 @@
-<p>dashboard works!</p>
+<h2>Dashboard</h2>
+
+<!-- Search Input -->
+<div>
+    <input
+      type="text"
+      placeholder="Search for artists, songs, playlists, or albums"
+      [(ngModel)]="searchTerm"
+      (input)="search()" />
+  </div>
+  
+  <!-- Display Search Results -->
+  <div *ngIf="searchResults.length > 0">
+    <h3>Search Results</h3>
+    <ul>
+      <li *ngFor="let result of searchResults">
+        <span *ngIf="result.type === 'artist'">🎤 Artist: {{ result.name }}</span>
+        <span *ngIf="result.type === 'song'">🎶 Song: {{ result.name }}</span>
+        <span *ngIf="result.type === 'playlist'">📜 Playlist: {{ result.name }}</span>
+        <span *ngIf="result.type === 'album'">💿 Album: {{ result.name }}</span>
+      </li>
+    </ul>
+  </div>
+  
+  <!-- Message for No Results -->
+  <div *ngIf="searchResults.length === 0 && searchTerm">
+    <p>No results found for "{{ searchTerm }}"</p>
+  </div>
+
+<!-- Show listener's playlists, liked playlists, and recommended songs -->
+<div *ngIf="userRole === 'listener'">
+  <h3>Your Playlists</h3>
+  <div *ngIf="playlists.length === 0">You have no playlists.</div>
+  <ul>
+    <li *ngFor="let playlist of playlists">{{ playlist.name }}</li>
+  </ul>
+
+  <h3>Liked Playlists</h3>
+  <div *ngIf="likedPlaylists.length === 0">You have no liked playlists.</div>
+  <ul>
+    <li *ngFor="let likedPlaylist of likedPlaylists">{{ likedPlaylist.name }}</li>
+  </ul>
+
+</div>
+
+<!-- Show artist's albums -->
+<div *ngIf="userRole === 'artist'">
+  <h3>Your Albums</h3>
+  <div *ngIf="albums.length === 0">You have no albums.</div>
+  <ul>
+    <li *ngFor="let album of albums">{{ album.album_title }}</li>
+  </ul>
+</div>
