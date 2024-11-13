@@ -3,6 +3,7 @@ const authRoutes = require('./routes/authRoutes');
 const playlistRoutes = require('./routes/playlistRoutes');
 const itunesRoute = require('./routes/itunesRoute');
 const albumRoutes = require('./routes/albumRoutes');
+const searchRoutes = require('./routes/searchRoutes');
 const db = require('./config/db');
 
 const { fetchAndSaveItunesData } = require('./controllers/itunesFetchController');
@@ -24,7 +25,7 @@ app.use('/api/itunes', itunesRoute); // Public route for fetching iTunes data
 app.use('/api/auth', authRoutes); // Public route for authentication
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/albums', albumRoutes);
-app.use('/api/songs', songsRoute)
+app.use('/api/search', searchRoutes)
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
