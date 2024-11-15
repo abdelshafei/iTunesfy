@@ -3,7 +3,7 @@ const fs = require('fs');
 const path = require('path');
 
 // Path to the database and schema files
-const dbPath = path.resolve(__dirname, '../music_app.db');
+const dbPath = path.resolve(__dirname, '../ITunesify.db');
 const schemaPath = path.resolve(__dirname, '../schema.sql');
 
 // Initialize the SQLite database connection

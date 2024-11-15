@@ -2,18 +2,23 @@
 // router.get('/add-LikedPlaylist/:listenerId', authMiddleware, playlistController.addUserLikedPlaylists)
 const db = require('../config/db');
 
-exports.createPlaylist = async (req, res) => {
-    const {albumTitle} = req.body;
-    const listenerId = req.params.listenername;
+// exports.createPlaylist = async (req, res) => {
+//     const {albumTitle} = req.body;
+//     const listenerId = req.params.listenername;
 
-    //create playlist
-};
+//     //create playlist
+// };
 
 exports.getUserPlaylists = async (req, res) => {
-    const listenerId = req.params.listenername;
+    const listenername = req.params.username;
 
     // Query to retrieve albums by artist ID
-    const query = `SELECT * FROM PlayList WHERE username = ?`;
+    const query = `
+    SELECT PlayList.* 
+    FROM PlayList 
+    JOIN Listeners ON PlayList.user_id = Listeners.user_id
+    WHERE Listeners.userName = ?;
+    `;
     db.all(query, [listenername], (err, rows) => {
       if (err) {
         console.error("Database error:", err.message);
@@ -25,7 +30,7 @@ exports.getUserPlaylists = async (req, res) => {
 };
 
 exports.getUserLikedPlaylists = async(req, res) => {
-    const listenerId = req.params.listenername;
+    const listenername = req.params.username;
 
     // Query to retrieve albums by artist ID
     const query = `
