@@ -30,7 +30,7 @@ exports.createAlbum = async (req, res) => {
     }
 };
 
-exports.getAlbumsByArtist = (req, res) => {
+exports.getUserAlbum = (req, res) => {
     const artistId = req.params.artistId;
   
     // Query to retrieve albums by artist ID

@@ -11,11 +11,19 @@ const { fetchAndSaveItunesData } = require('./controllers/itunesFetchController'
 // Run the fetch and save function
 fetchAndSaveItunesData().then(() => {
     console.log("Database update complete.");
-    process.exit(0); // Exit the process after updating
 }).catch((error) => {
     console.error("Error updating database:", error);
-    process.exit(1);
 });
+
+setInterval(() => {
+    fetchAndSaveItunesData()
+    .then(() => {
+    console.log("Periodic database update complete.");
+    })
+    .catch((error) => {
+    console.error("Error during periodic database update:", error.message || error);
+    });
+}, 60 * 60 * 1000);
 
 const app = express();
 app.use(express.json());
@@ -29,5 +37,5 @@ app.use('/api/search', searchRoutes)
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {
-    console.log(`Server is running on port ${PORT}`);
+    console.log(`Server is running on port http://localhost:${PORT}`);
 });

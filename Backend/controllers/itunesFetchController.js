@@ -1,17 +1,18 @@
 const axios = require('axios');
+const db = require('../config/db');
 
-const searchTerms = require('../config/itunesTerms'); // Import hard-wired search terms
+const searchTerms = require('../config/iTunesTerms'); // Import hard-wired search terms
 
 // Function to fetch and save data for predefined search terms
 const fetchAndSaveItunesData = async () => {
-    for (const term of searchTerms) {
-        console.log(`Fetching data for: ${term}`);
+    for (const [artistName, authId] of Object.entries(searchItems)) {
+      console.log(`Fetching data for: ${artistName} with authentication ID: ${authId}`);
 
         try {
             // Fetch data from iTunes API for each term
             const response = await axios.get(`https://itunes.apple.com/search`, {
                 params: {
-                    term: term,
+                    term: artistName,
                     media: 'music',
                     entity: 'album',
                     limit: 10 // Limit the number of results per term
@@ -21,7 +22,7 @@ const fetchAndSaveItunesData = async () => {
             const results = response.data.results;
 
             if (results.length === 0) {
-                console.log(`No results found for ${term}.`);
+                console.log(`No results found for ${artistName}.`);
                 continue;
             }
 
@@ -36,8 +37,8 @@ const fetchAndSaveItunesData = async () => {
 
                 // Insert artist if not already in Artists table
                 db.run(
-                    `INSERT OR IGNORE INTO Artists (userName, email, password, country, style) VALUES (?, ?, ?, ?, ?, ?)`,
-                    [artistName, `${artistName}@gmail.com`, 'hashed_password', 'Unknown', 'Music'], // Adjust fields as needed
+                    `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) VALUES (?, ?, ?, ?, ?, ?)`,
+                    [artistName, authId, `${artistName}@gmail.com`, 'hashed_password', 'Unknown', 'Music'], // Adjust fields as needed
                     (err) => {
                         if (err) {
                             console.error("Error inserting artist:", err.message);
@@ -48,7 +49,7 @@ const fetchAndSaveItunesData = async () => {
                 // Insert album if not already in Album table
                 db.run(
                     `INSERT OR IGNORE INTO Album (album_id, album_title, authentication_id) VALUES (?, ?, ?)`,
-                    [albumId, albumTitle, albumId],
+                    [albumId, albumTitle, authId],
                     (err) => {
                         if (err) {
                             console.error("Error inserting album:", err.message);

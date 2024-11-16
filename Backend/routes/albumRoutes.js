@@ -1,5 +1,5 @@
 const express = require('express');
-const playlistController = require('../controllers/albumController');
+const albumController = require('../controllers/albumController');
 const authMiddleware = require('../middleware/authMiddleware'); // Import auth middleware
 const router = express.Router();
 

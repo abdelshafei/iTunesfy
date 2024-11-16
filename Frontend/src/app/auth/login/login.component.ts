@@ -29,7 +29,9 @@ export class LoginComponent {
         localStorage.setItem('authToken', res.token); // Save the token
         localStorage.setItem('username', this.username);
         // if artist store authID in localStorage
-        if(this.userRole === 'artist')
+        if(this.userRole === 'artist') {
+          localStorage.setItem("AuthId", this.authentication_id);
+        }
         this.router.navigate(['/dashboard']); // Redirect to dashboard after login
       },
       error: (err) => {
