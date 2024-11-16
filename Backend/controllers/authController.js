@@ -7,25 +7,56 @@ const { listeners } = require('process');
 exports.register = async (req, res) => {
     const { userName, email, password, country, userType } = req.body;
 
-    try {
-        // Check if user already exists
-        const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
-        db.get(`SELECT * FROM ${tableName} WHERE email = ?`, [email], async (err, user) => {
-            if (user) return res.status(400).json({ message: 'User already exists' });
-
             // Hash the password
             const hashedPassword = await bcrypt.hash(password, 10);
 
             // Insert user into appropriate table based on userType
             if (userType === 'artist') {
-                const { style, authentication_id} = req.body; // Additional field for artists
-                db.run(
-                    `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) VALUES (?, NULL, ?, ?, ?, ?)`,
-                    [userName, authentication_id, email, hashedPassword, country, style],
-                    function (err) {
-                        if (err) return res.status(500).json({ message: 'Error registering artist' });
-                        res.status(201).json({ message: 'Artist registered successfully' });
-                    }
+                const { style, authentication_id } = req.body;
+
+                // Step 1: Validate the authentication_id from the `auth_ids` table
+                db.get(
+                  `SELECT * FROM auth_ids WHERE authentication_id = ?`,
+                  [authentication_id],
+                  (err, validAuthId) => {
+                    if (err) return res.status(500).json({ message: 'Error validating authentication ID' });
+        
+                    // If the authentication_id is not found in `auth_ids`, it's invalid
+                    if (!validAuthId)
+                      return res
+                        .status(400)
+                        .json({ message: 'Authentication ID is invalid. Please use a valid ID.' });
+        
+                    // Step 2: Check if the authentication_id is already in use by another artist
+                    db.get(
+                      `SELECT * FROM Artists WHERE authentication_id = ?`,
+                      [authentication_id],
+                      (err, usedAuthId) => {
+                        if (err)
+                          return res.status(500).json({ message: 'Error checking authentication ID usage' });
+        
+                        // If the authentication_id is already in use, return an error
+                        if (usedAuthId)
+                          return res
+                            .status(400)
+                            .json({ message: 'Authentication ID is already in use by another artist.' });
+        
+                        // Step 3: Register the artist if all checks pass
+                        db.run(
+                          `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) 
+                          VALUES (?, ?, ?, ?, ?, ?)`,
+                          [userName, authentication_id, email, hashedPassword, country, style],
+                          function (err) {
+                            if (err)
+                              return res
+                                .status(500)
+                                .json({ message: 'Error registering artist in the database' });
+                            res.status(201).json({ message: 'Artist registered successfully' });
+                          }
+                        );
+                      }
+                    );
+                  }
                 );
             } else {
                 // Default to listener registration
@@ -38,10 +69,6 @@ exports.register = async (req, res) => {
                     }
                 );
             }
-        });
-    } catch (error) {
-        res.status(500).json({ message: 'Server error' });
-    }
 };
 
 // User login (for both listeners and artists)

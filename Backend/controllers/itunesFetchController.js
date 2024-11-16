@@ -5,7 +5,7 @@ const searchTerms = require('../config/iTunesTerms'); // Import hard-wired searc
 
 // Function to fetch and save data for predefined search terms
 const fetchAndSaveItunesData = async () => {
-    for (const [artistName, authId] of Object.entries(searchItems)) {
+    for (const [artistName, authId] of Object.entries(searchTerms)) {
       console.log(`Fetching data for: ${artistName} with authentication ID: ${authId}`);
 
         try {
@@ -69,9 +69,9 @@ const fetchAndSaveItunesData = async () => {
                 );
             });
 
-            console.log(`${results.length} items fetched for "${term}" and saved to the database.`);
+            console.log(`${results.length} items fetched for "${artistName}" and saved to the database.`);
         } catch (error) {
-            console.error(`Error fetching data for ${term}:`, error.message);
+            console.error(`Error fetching data for ${artistName}:`, error.message);
         }
     }
 
