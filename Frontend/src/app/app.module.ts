@@ -1,7 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 
-import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 
@@ -12,7 +11,10 @@ import { DashboardComponent } from './dashboard/dashboard.component';
 import { RegisterComponent } from './auth/register/register.component';
 import { RoleSelectionComponent } from './auth/role-selection/role-selection.component';
 import { AuthChoiceComponent } from './auth/auth-choice/auth-choice.component';
-
+import { RouterModule } from '@angular/router';
+import {AppRoutingModule} from './app-routing.module';
+import { FormsModule } from '@angular/forms';
+import { AuthService } from './auth/auth.service';
 
 @NgModule({
   declarations: [
@@ -26,10 +28,12 @@ import { AuthChoiceComponent } from './auth/auth-choice/auth-choice.component';
   ],
   imports: [
     BrowserModule,
-    AppRoutingModule
+    AppRoutingModule,
+    FormsModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true }
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    AuthService
   ],
   bootstrap: [AppComponent]
 })
