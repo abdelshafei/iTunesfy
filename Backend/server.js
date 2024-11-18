@@ -9,38 +9,33 @@ const db = require('./config/db');
 
 const { fetchAndSaveItunesData } = require('./controllers/itunesFetchController');
 
-// Run the fetch and save function
 fetchAndSaveItunesData().then(() => {
     console.log("Database update complete.");
 }).catch((error) => {
     console.error("Error updating database:", error);
 });
 
-setInterval(() => {
-    fetchAndSaveItunesData()
-    .then(() => {
-    console.log("Periodic database update complete.");
-    })
-    .catch((error) => {
-    console.error("Error during periodic database update:", error.message || error);
-    });
-}, 60 * 60 * 1000);
 
 const app = express();
+
+console.log("creating server app")
 
 app.use(cors({
     origin: 'http://localhost:4200', // Frontend URL
     methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
 }));
+console.log("setting up CORS")
 
 app.use(express.json());
 
 // Use routes
+console.log("attaching routes")
 app.use('/api/itunes', itunesRoute); // Public route for fetching iTunes data
 app.use('/api/auth', authRoutes); // Public route for authentication
 app.use('/api/playlists', playlistRoutes);
 app.use('/api/albums', albumRoutes);
-app.use('/api/search', searchRoutes)
+app.use('/api/search', searchRoutes);
+
 // Start server
 const PORT = process.env.PORT || 3000;
 app.listen(PORT, () => {

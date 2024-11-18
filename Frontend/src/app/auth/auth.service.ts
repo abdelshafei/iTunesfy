@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:3000'; // Your backend auth URL
+  private apiUrl = 'http://localhost:3000/api'; // Your backend auth URL
 
   constructor(private http: HttpClient, private router: Router) {}
 
