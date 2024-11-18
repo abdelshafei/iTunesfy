@@ -4,6 +4,6 @@ const authMiddleware = require('../middleware/authMiddleware'); // Import auth m
 const router = express.Router();
 
 // Protected route to get a user's playlists
-router.get('', authMiddleware, searchController.getSearchTerms);
+router.get('/:searchTerm', authMiddleware, searchController.getSearchTerms);
 
 module.exports = router;

@@ -1,13 +1,11 @@
 const db = require('../config/db');
 
 exports.getSearchTerms = (req, res) => {
-  const term = req.query.q; // Use query parameter `q` for the search term
-  if (!term) {
-    return res.status(400).json({ message: "You have to search something before we proceed" });
-  }
+  const term = req.params.searchTerm; // Use query parameter `q` for the search term
 
   // Add wildcards to the search term for partial matching
   const query = `%${term}%`;
+
 
   // SQL query to search across multiple tables with partial matching
   const sql = `

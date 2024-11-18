@@ -12,7 +12,15 @@ export class SearchService {
 
   // Search function that sends the search term to the backend
   search(term: string): Observable<any[]> {
-    const params = new HttpParams().set('q', term);
-    return this.http.get<any[]>(`${this.apiUrl}/search`, { params });
+
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+    return this.http.get<any[]>(`${this.apiUrl}/search/${term}`, { headers });
   }
 }
