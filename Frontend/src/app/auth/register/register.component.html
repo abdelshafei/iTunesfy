@@ -1,24 +1,34 @@
 <h2>Register as {{ userRole | titlecase }}</h2>
+<hr>
 <form (ngSubmit)="register()">
-  <label>Username:</label>
-  <input type="text" [(ngModel)]="userName" name="userName" required>
+  <label>Username</label>
   <br>
-  <label>Email:</label>
-  <input type="email" [(ngModel)]="email" name="email" required>
+  <input placeholder="JohnDoe" type="text" [(ngModel)]="userName" name="userName" required>
   <br>
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="password" name="password" required>
+  <label>Email</label>
   <br>
-  <label>Country:</label>
-  <input type="text" [(ngModel)]="country" name="country" required>
+  <input placeholder="john.doe@gmail.com" type="email" [(ngModel)]="email" name="email" required>
+  <br>
+  <label>Password</label>
+  <br>
+  <input placeholder="John123" type="password" [(ngModel)]="password" name="password" required>
+  <br>
+  <label>Country</label>
+  <br>
+  <input placeholder="e.g, USA, Canada, etc." type="text" [(ngModel)]="country" name="country" required>
   <br>
   <div *ngIf="userRole === 'artist'">
-    <label>Music Style:</label>
-    <input type="text" [(ngModel)]="style" name="style" required>
+    <label>Music Style</label>
     <br>
-    <label>Authentication ID:</label>
-    <input type="int" [(ngModel)]="authentication_id" name="authentication_id" required>
+    <input placeholder="e.g, Hip Hop, Country, Jazz, etc." type="text" [(ngModel)]="style" name="style" required>
+    <br>
+    <label>Authentication ID</label>
+    <br>
+    <input placeholder="565XXX" [(ngModel)]="authentication_id" name="authentication_id" required>
   </div>
   <br>
-  <button type="submit">Register</button>
+  <div id="container">
+    <button type="submit">Register</button>
+  </div>
 </form>
+

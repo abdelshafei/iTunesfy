@@ -1,0 +1,45 @@
+form {
+    max-width: 400px; /* Set a max width for the form */ 
+  }
+  
+.form-group {
+    display: flex;
+    align-items: center;
+    margin-bottom: 10px; /* Add spacing between fields */
+}
+
+label {
+    flex: 1; /* Make the label take up one part of the row */
+    text-align: right; /* Align text to the right */
+    margin-right: 10px; /* Add spacing between label and input */
+}
+
+input {
+
+    margin-bottom: 20px;
+    border-color: blueviolet;
+    border-radius: 5px;
+    height: 25px;
+    width: 150%;
+}
+
+#container {
+    display: flex; /* Make it a flex container */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+    height: 100%;
+}
+
+button {
+    height: 30px;
+    width: 100px;
+    background-color: chartreuse;
+    border-radius: 15px;
+    border: none;
+    font-weight: bold;
+    cursor: pointer
+}
+
+hr {
+    margin-bottom: 50px;
+}

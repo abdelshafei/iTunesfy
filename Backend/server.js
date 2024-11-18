@@ -1,4 +1,5 @@
 const express = require('express');
+const cors = require('cors');
 const authRoutes = require('./routes/authRoutes');
 const playlistRoutes = require('./routes/playlistRoutes');
 const itunesRoute = require('./routes/itunesRoute');
@@ -26,6 +27,12 @@ setInterval(() => {
 }, 60 * 60 * 1000);
 
 const app = express();
+
+app.use(cors({
+    origin: 'http://localhost:4200', // Frontend URL
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+}));
+
 app.use(express.json());
 
 // Use routes

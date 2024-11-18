@@ -16,6 +16,9 @@ import { RouterModule } from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
+import { ArtistService } from './services/artist.service'
+import { ListenerService } from './services/listener.service'
+import { SearchService } from './services/search.service'
 
 
 
@@ -37,7 +40,10 @@ import { AuthService } from './auth/auth.service';
   ],
   providers: [
     { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
-    AuthService
+    AuthService,
+    ArtistService,
+    ListenerService,
+    SearchService
   ],
   bootstrap: [AppComponent]
 })

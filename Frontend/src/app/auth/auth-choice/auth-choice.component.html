@@ -1,3 +1,7 @@
 <h2>You are a(n) {{ userRole | titlecase }}!</h2>
+<h3> Do you already have an account?</h3>
+<hr>
+<div id="container">
 <button (click)="goToRegister()">Register as {{ userRole | titlecase }}</button>
 <button (click)="goToLogin()">Login as {{ userRole | titlecase }}</button>
+</div>

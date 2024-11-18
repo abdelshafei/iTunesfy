@@ -1,20 +1,20 @@
 <h2>Login as {{ userRole | titlecase }}</h2>
+<hr>
 <form (ngSubmit)="login()">
-  <label>username:</label>
-  <input type="text" [(ngModel)]="username" name="username" required />
-  <br />
-  <label>Password:</label>
-  <input type="password" [(ngModel)]="password" name="password" required />
-  <br />
+  <input placeholder="username" type="text" [(ngModel)]="username" name="username" required />
+  <br>
+  <input placeholder="Password" type="password" [(ngModel)]="password" name="password" required />
+  <br>
   <div *ngIf="userRole === 'artist'">
-    <label>Authentication ID:</label>
     <input
-      type="number"
+      placeholder="Authentication ID"
       [(ngModel)]="authentication_id"
       name="authentication_id"
       required
     />
   </div>
-  <br />
-  <button type="submit">Log In</button>
+  <br>
+  <div id="container">
+    <button type="submit">Log In</button>
+  </div>
 </form>
