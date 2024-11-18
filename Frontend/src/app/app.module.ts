@@ -4,6 +4,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { AppComponent } from './app.component';
 import { AuthComponent } from './auth/auth.component';
 
+import { HttpClientModule } from '@angular/common/http';
 import { HTTP_INTERCEPTORS } from '@angular/common/http';
 import { AuthInterceptor } from './auth/auth.interceptor';
 import { LoginComponent } from './auth/login/login.component';
@@ -15,6 +16,8 @@ import { RouterModule } from '@angular/router';
 import {AppRoutingModule} from './app-routing.module';
 import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
+
+
 
 @NgModule({
   declarations: [
@@ -29,10 +32,11 @@ import { AuthService } from './auth/auth.service';
   imports: [
     BrowserModule,
     AppRoutingModule,
-    FormsModule
+    FormsModule,
+    HttpClientModule
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true },
+    { provide: HTTP_INTERCEPTORS, useClass: AuthInterceptor, multi: true},
     AuthService
   ],
   bootstrap: [AppComponent]

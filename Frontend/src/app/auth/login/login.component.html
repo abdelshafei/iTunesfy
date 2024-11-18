@@ -8,7 +8,7 @@
 
   <div *ngIf="userRole === 'artist'">
     <label>Authentication ID:</label>
-    <input type="INT" [(ngModel)]="authentication_id" required>
+    <input type="number" [(ngModel)]="authentication_id" required>
   </div>
 
   <button type="submit">Log In</button>
