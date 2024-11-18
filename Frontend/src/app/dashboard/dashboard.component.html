@@ -1,13 +1,13 @@
 <h2>Dashboard</h2>
+<hr id="search-line">
 
 <!-- Search Input -->
 <div>
-    <input
-      type="text"
-      placeholder="Search for artists, songs, playlists, or albums"
-      [(ngModel)]="searchTerm"
-      (input)="search()" />
-  </div>
+  <input
+  type="text"
+  placeholder="Search for artists, songs, playlists, or albums"
+  [(ngModel)]="searchTerm"
+  (input)="search()" />
   
   <!-- Display Search Results -->
   <div *ngIf="searchResults.length > 0">
@@ -26,16 +26,21 @@
   <div *ngIf="searchResults.length === 0 && searchTerm">
     <p>No results found for "{{ searchTerm }}"</p>
   </div>
-
+</div>
+<hr id="search-line">
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
   <h3>Your Playlists</h3>
+  <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <ul>
     <li *ngFor="let playlist of playlists">{{ playlist.name }}</li>
   </ul>
 
+  <hr id="small-line-section">
+
   <h3>Liked Playlists</h3>
+  <hr id="small-line">
   <div *ngIf="likedPlaylists.length === 0">You have no liked playlists.</div>
   <ul>
     <li *ngFor="let likedPlaylist of likedPlaylists">{{ likedPlaylist.name }}</li>
@@ -46,6 +51,7 @@
 <!-- Show artist's albums -->
 <div *ngIf="userRole === 'artist'">
   <h3>Your Albums</h3>
+  <hr id="small-line">
   <div *ngIf="albums.length === 0">You have no albums.</div>
   <ul>
     <li *ngFor="let album of albums">{{ album.album_title }}</li>

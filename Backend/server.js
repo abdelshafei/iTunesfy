@@ -21,8 +21,8 @@ const app = express();
 console.log("creating server app")
 
 app.use(cors({
-    origin: 'http://localhost:4200', // Frontend URL
-    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'], // Allowed methods
+    origin: 'http://localhost:4200', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
 }));
 console.log("setting up CORS")
 

@@ -2,15 +2,17 @@ const jwt = require('jsonwebtoken');
 
 // Middleware to verify JWT token
 function authMiddleware(req, res, next) {
-    const token = req.headers['authorization'];
+    console.log("Auth middleware triggered");
 
+    const token = req.headers.authorization.split(' ')[1];
+    
     // Check if token is provided
     if (!token) {
         return res.status(401).json({ message: 'Access denied. No token provided.' });
     }
 
     // Verify token
-    jwt.verify(token, process.env.JWT_SECRET, (err, decoded) => {
+    jwt.verify(token, "secret", (err, decoded) => {
         if (err) {
             return res.status(403).json({ message: 'Invalid token.' });
         }

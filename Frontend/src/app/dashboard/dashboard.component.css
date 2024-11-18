@@ -1,0 +1,22 @@
+input {
+    width : 70%;
+}
+
+hr {
+    margin-bottom: 50px;
+}
+
+#search-line {
+    margin-bottom: 10px;
+}
+
+#small-line {
+    width: 50%;
+    margin-left: 0px;
+}
+
+#small-line-section {
+    width: 50%;
+    margin-left: 0px;
+    margin-bottom: 50px;
+}

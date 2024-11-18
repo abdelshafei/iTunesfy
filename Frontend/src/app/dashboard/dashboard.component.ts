@@ -24,9 +24,9 @@ export class DashboardComponent implements OnInit {
 
   ngOnInit(): void {
     this.search();
-    if (this.userRole === 'listener' && this.userId) {
+    if (this.userRole === 'listener') {
       this.loadListenerData();
-    } else if (this.userRole === 'artist' && this.userId) {
+    } else if (this.userRole === 'artist') {
       this.loadArtistData();
     }
   }

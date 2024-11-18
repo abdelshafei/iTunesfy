@@ -1,4 +1,4 @@
-// router.get('/remove-LikedPlaylist/:listenerId', authMiddleware, playlistController.removeUserLikedPlaylists)
+// router.get('/remove-LikedPlaylist/:listenerId/:', authMiddleware, playlistController.removeUserLikedPlaylists)
 // router.get('/add-LikedPlaylist/:listenerId', authMiddleware, playlistController.addUserLikedPlaylists)
 const db = require('../config/db');
 

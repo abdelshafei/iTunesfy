@@ -10,7 +10,18 @@ export class ArtistService {
 
   constructor(private http: HttpClient) {}
 
+
+
   getAlbums(): Observable<any[]> {
-    return this.http.get<any[]>(`${this.apiUrl}/albums/artist/${localStorage.getItem("AuthId")}`);
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+    
+    return this.http.get<any[]>(`${this.apiUrl}/albums/artist/${localStorage.getItem("AuthId")}`, { headers });
   }
 }
