@@ -1,39 +1,35 @@
 const axios = require('axios');
 const db = require('../config/db');
-
 const searchTerms = require('../config/iTunesTerms'); // Import hard-wired search terms
 
 // Function to fetch and save data for predefined search terms
 const fetchAndSaveItunesData = async () => {
+    let albumIdCounter = 0;
     for (const [artistName, authId] of Object.entries(searchTerms)) {
-      console.log(`Fetching data for: ${artistName} with authentication ID: ${authId}`);
+        console.log(`Fetching albums for: ${artistName} with authentication ID: ${authId}`);
 
         try {
-            // Fetch data from iTunes API for each term
-            const response = await axios.get(`https://itunes.apple.com/search`, {
+            // Fetch albums for the artist
+            const albumResponse = await axios.get(`https://itunes.apple.com/search`, {
                 params: {
                     term: artistName,
                     media: 'music',
                     entity: 'album',
-                    limit: 10 // Limit the number of results per term
+                    limit: 10 // Limit the number of albums
                 }
             });
 
-            const results = response.data.results;
+            const albums = albumResponse.data.results;
 
-            if (results.length === 0) {
-                console.log(`No results found for ${artistName}.`);
+            if (albums.length === 0) {
+                console.log(`No albums found for ${artistName}.`);
                 continue;
             }
 
-            // Process and insert data into the database
-            results.forEach((item) => {
-                const artistName = item.artistName;
-                const albumTitle = item.collectionName;
-                const songTitle = item.trackName;
-                const duration = item.trackTimeMillis;
-                const albumId = item.collectionId;
-                const songId = item.trackId;
+            for (const album of albums) {
+                albumIdCounter++;
+                const albumTitle = album.collectionName;
+                const albumId = album.collectionId;
 
                 // Insert artist if not already in Artists table
                 db.run(
@@ -46,10 +42,10 @@ const fetchAndSaveItunesData = async () => {
                     }
                 );
 
-                // Insert album if not already in Album table
+                // Insert album into the database
                 db.run(
-                    `INSERT OR IGNORE INTO Album (album_id, album_title, authentication_id) VALUES (?, ?, ?)`,
-                    [albumId, albumTitle, authId],
+                    `INSERT OR IGNORE INTO Album (album_title, authentication_id) VALUES (?, ?)`,
+                    [albumTitle, authId],
                     (err) => {
                         if (err) {
                             console.error("Error inserting album:", err.message);
@@ -57,19 +53,37 @@ const fetchAndSaveItunesData = async () => {
                     }
                 );
 
-                // Insert song into Song table with reference to album_id
-                db.run(
-                    `INSERT OR IGNORE INTO Song (song_id, song_title, duration, album_id) VALUES (?, ?, ?, ?)`,
-                    [songId, songTitle, duration, albumId],
-                    (err) => {
-                        if (err) {
-                            console.error("Error inserting song:", err.message);
-                        }
-                    }
-                );
-            });
+                console.log(`Inserted album: ${albumTitle} (ID: ${albumIdCounter})`);
 
-            console.log(`${results.length} items fetched for "${artistName}" and saved to the database.`);
+                // Fetch songs for this album
+                console.log(`Fetching songs for album: ${albumTitle}`);
+                const songResponse = await axios.get(`https://itunes.apple.com/lookup`, {
+                    params: {
+                        id: albumId,
+                        entity: 'song' // Fetch songs in the album
+                    }
+                });
+
+                const songs = songResponse.data.results.filter((item) => item.wrapperType === 'track');
+
+                for (const song of songs) {
+                    const songTitle = song.trackName;
+                    const duration = song.trackTimeMillis;
+
+                    // Insert song into the database
+                    db.run(
+                        `INSERT OR IGNORE INTO Song (song_title, duration, album_id) VALUES (?, ?, ?)`,
+                        [songTitle, duration, albumIdCounter],
+                        (err) => {
+                            if (err) {
+                                console.error("Error inserting song:", err.message);
+                            }
+                        }
+                    );
+                }
+
+                console.log(`Inserted ${songs.length} songs for album: ${albumTitle}`);
+            }
         } catch (error) {
             console.error(`Error fetching data for ${artistName}:`, error.message);
         }
@@ -79,3 +93,4 @@ const fetchAndSaveItunesData = async () => {
 };
 
 module.exports = { fetchAndSaveItunesData };
+

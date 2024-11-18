@@ -14,10 +14,10 @@
     <h3>Search Results</h3>
     <ul>
       <li *ngFor="let result of searchResults">
-        <span *ngIf="result.type === 'artist'">🎤 Artist: {{ result.name }}</span>
-        <span *ngIf="result.type === 'song'">🎶 Song: {{ result.name }}</span>
-        <span *ngIf="result.type === 'playlist'">📜 Playlist: {{ result.name }}</span>
-        <span *ngIf="result.type === 'album'">💿 Album: {{ result.name }}</span>
+        <span *ngIf="result.type === 'artist'">🎤 {{ result.name }}</span>
+        <span *ngIf="result.type === 'song'">🎶  {{ result.name }}</span>
+        <span *ngIf="result.type === 'playlist'">📜  {{ result.name }}</span>
+        <span *ngIf="result.type === 'album'">💿  {{ result.name }}</span>
       </li>
     </ul>
   </div>

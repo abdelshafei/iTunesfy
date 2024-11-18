@@ -22,7 +22,7 @@ CREATE TABLE IF NOT EXISTS Song (
     song_title TEXT NOT NULL,
     duration INTEGER NOT NULL,
     album_id INTEGER NOT NULL,
-    PRIMARY KEY(song_id, song_title),
+    PRIMARY KEY(song_id),
     FOREIGN KEY (album_id) REFERENCES Album(album_id)
 );
 
