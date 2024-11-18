@@ -10,11 +10,11 @@ export class ListenerService {
 
   constructor(private http: HttpClient) {}
 
-  getPlaylists(userId: string): Observable<any[]> {
+  getPlaylists(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/playlists/ownPlaylist/${localStorage.getItem('username')}`);
   }
 
-  getLikedPlaylists(userId: string): Observable<any[]> {
+  getLikedPlaylists(): Observable<any[]> {
     return this.http.get<any[]>(`${this.apiUrl}/playlists/liked-playlists/${localStorage.getItem('username')}`);
   }
 }

@@ -12,6 +12,7 @@ export class LoginComponent {
   username = '';
   password = '';
   authentication_id = '';
+  passwordFieldType: string = 'password';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -38,5 +39,9 @@ export class LoginComponent {
         alert('Login failed');
       }
     });
+  }
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 }

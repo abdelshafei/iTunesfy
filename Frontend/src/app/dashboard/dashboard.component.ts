@@ -12,6 +12,7 @@ import { SearchService } from '../services/search.service';
 export class DashboardComponent implements OnInit {
   userRole: string | null = localStorage.getItem('userRole');
   userId: string | null = localStorage.getItem('userId'); // Assuming user ID is stored
+  authId: string | null = localStorage.getItem('AuthId') 
   playlists: any[] = [];
   likedPlaylists: any[] = [];
   recommendedSongs: any[] = [];
@@ -46,19 +47,19 @@ export class DashboardComponent implements OnInit {
   }
 
   loadListenerData(): void {
-    if (this.userId) {
-      this.listenerService.getPlaylists(this.userId).subscribe(data => {
+    if (this.userRole === 'listener') {
+      this.listenerService.getPlaylists().subscribe(data => {
         this.playlists = data;
       });
-      this.listenerService.getLikedPlaylists(this.userId).subscribe(data => {
+      this.listenerService.getLikedPlaylists().subscribe(data => {
         this.likedPlaylists = data;
       });
     }
   }
 
   loadArtistData(): void {
-    if (this.userId) {
-      this.artistService.getAlbums(this.userId).subscribe(data => {
+    if (this.userRole === 'artist') {
+      this.artistService.getAlbums().subscribe(data => {
         this.albums = data;
       });
     }

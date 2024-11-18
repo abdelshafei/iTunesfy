@@ -3,7 +3,14 @@
 <form (ngSubmit)="login()">
   <input placeholder="username" type="text" [(ngModel)]="username" name="username" required />
   <br>
-  <input placeholder="Password" type="password" [(ngModel)]="password" name="password" required />
+  <input placeholder="Password" id="password" type="password" [(ngModel)]="password" name="password" required />
+  <i
+  class="bi"
+  [class.bi-eye-slash]="passwordFieldType === 'password'"
+  [class.bi-eye]="passwordFieldType === 'text'"
+  id="togglePassword"
+  (click)="togglePasswordVisibility()"
+  ></i>
   <br>
   <div *ngIf="userRole === 'artist'">
     <input

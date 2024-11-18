@@ -1,14 +1,10 @@
-const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
 const db = require('../config/db');
-const { listeners } = require('process');
+
 
 // Register a new user (listener or artist)
 exports.register = async (req, res) => {
     const { userName, email, password, country, userType } = req.body;
-
-            // Hash the password
-            const hashedPassword = await bcrypt.hash(password, 10);
 
             // Insert user into appropriate table based on userType
             if (userType === 'artist') {
@@ -45,7 +41,7 @@ exports.register = async (req, res) => {
                         db.run(
                           `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) 
                           VALUES (?, ?, ?, ?, ?, ?)`,
-                          [userName, authentication_id, email, hashedPassword, country, style],
+                          [userName, authentication_id, email, password, country, style],
                           function (err) {
                             if (err)
                               return res
@@ -73,7 +69,7 @@ exports.register = async (req, res) => {
 
 // User login (for both listeners and artists)
 exports.login = (req, res) => {
-    const { username, email, password, userType } = req.body;
+    const { username, password, userType, authentication_id} = req.body;
 
     const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
     if(tableName === 'listeners') {
@@ -81,35 +77,46 @@ exports.login = (req, res) => {
             if (err || !user) return res.status(400).json({ message: 'Invalid credentials' });
 
             // Verify password
-            const validPassword = await bcrypt.compare(password, user.password);
+            const validPassword = password === user.password
             if (!validPassword) return res.status(400).json({ message: 'Invalid credentials' });
 
             // Generate JWT token
             const token = jwt.sign(
                 { user_id: user.user_id || user.authentication_id, userType: userType },
-                process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                "secret",
+                { expiresIn: '9h' }
             );
 
             res.json({ token, message: 'Login successful' });
         });
     } else {
         db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-            if (err || !user) return res.status(400).json({ message: 'Invalid credentials' });
+            if (err || !user) {
+              console.log("invalid username...");
+              return res.status(400).json({ message: 'Invalid credentials' });
+            }
 
             // Verify password & authentication id
-            const validPassword = await bcrypt.compare(password, user.password);
+            const validPassword = password === user.password;
             const validAuthId = authentication_id === user.authentication_id;
-            if(!validPassword || !validAuthId) return res.status(400).json({ message: 'Invalid credentials' });
+            if(!validPassword || !validAuthId) {
+              if(!validPassword) {
+                console.log("incorrect pasword")
+              } else if(!validAuthId) {
+                console.log("invalid auth id")
+              }
+              return res.status(400).json({ message: 'Invalid credentials' });
+            }
+            
 
             // Generate JWT token
             const token = jwt.sign(
                 { user_id: user.user_id || user.authentication_id, userType: userType },
-                process.env.JWT_SECRET,
-                { expiresIn: '1h' }
+                "secret",
+                { expiresIn: '9h' }
             );
-
-            res.json({ token, message: 'Login successful' });
+            console.log("login successful")
+            res.status(200).json({ token, message: 'Login successful' });
         });
     }
 };

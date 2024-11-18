@@ -9,7 +9,7 @@ CREATE TABLE IF NOT EXISTS Listeners (
 
 CREATE TABLE IF NOT EXISTS Artists (
     userName TEXT UNIQUE NOT NULL,
-    authentication_id INTEGER UNIQUE NOT NULL,
+    authentication_id TEXT UNIQUE NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
     country TEXT NOT NULL,
@@ -29,7 +29,7 @@ CREATE TABLE IF NOT EXISTS Song (
 CREATE TABLE IF NOT EXISTS Album (
     album_id INTEGER UNIQUE NOT NULL,
     album_title TEXT NOT NULL,
-    authentication_id INTEGER NOT NULL,
+    authentication_id TEXT NOT NULL,
     PRIMARY KEY(album_id)
     FOREIGN KEY (authentication_id) REFERENCES Artists(authentication_id)
 );
@@ -61,14 +61,14 @@ CREATE TABLE IF NOT EXISTS Playlist_Song (
 
 
 CREATE TABLE IF NOT EXISTS Auth_ids (
-    Auth_id  INTEGER NOT NULL,
+    Auth_id  TEXT NOT NULL,
     FOREIGN KEY (Auth_id) REFERENCES Artists(authentication_id)
 );
 
-INSERT INTO Auth_ids VALUES(369196);
-INSERT INTO Auth_ids VALUES(538359);
-INSERT INTO Auth_ids VALUES(239473);
-INSERT INTO Auth_ids VALUES(139010);
-INSERT INTO Auth_ids VALUES(923253);
-INSERT INTO Auth_ids VALUES(763365);
-INSERT INTO Auth_ids VALUES(666777);
+INSERT INTO Auth_ids VALUES("369196");
+INSERT INTO Auth_ids VALUES("538359");
+INSERT INTO Auth_ids VALUES("239473");
+INSERT INTO Auth_ids VALUES("139010");
+INSERT INTO Auth_ids VALUES("923253");
+INSERT INTO Auth_ids VALUES("763365");
+INSERT INTO Auth_ids VALUES("666777");

@@ -38,7 +38,7 @@ const fetchAndSaveItunesData = async () => {
                 // Insert artist if not already in Artists table
                 db.run(
                     `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) VALUES (?, ?, ?, ?, ?, ?)`,
-                    [artistName, authId, `${artistName}@gmail.com`, 'hashed_password', 'USA', 'Music'], // Adjust fields as needed
+                    [artistName, authId, `${artistName}@gmail.com`, "hashed_password", 'USA', 'Music'], // Adjust fields as needed
                     (err) => {
                         if (err) {
                             console.error("Error inserting artist:", err.message);

@@ -12,17 +12,14 @@ exports.createAlbum = async (req, res) => {
   
       // Prepare and execute the SQL query to insert the album
       const query = `INSERT INTO Album (album_title, authentication_id) VALUES (?, ?)`;
-      db.run(query, [albumTitle, authentication_id], function (err) {
+      db.run(query, [albumTitle, artistId], function (err) {
         if (err) {
           console.error("Database error:", err.message);
           return res.status(500).json({ message: "Failed to create album." });
         }
   
         // Send a success response with the new album ID
-        res.status(201).json({
-          message: "Album created successfully.",
-          albumId: this.lastID, // `lastID` provides the ID of the inserted album
-        });
+        res.status(201).json({message: "Album created successfully."});
       });
     } catch (error) {
       console.error("Error creating album:", error);
@@ -31,7 +28,8 @@ exports.createAlbum = async (req, res) => {
 };
 
 exports.getUserAlbum = (req, res) => {
-    const artistId = req.params.artistId;
+  const { artistId } = req.params.artistId;
+  console.log("artistId requesting albums of theirs: " + artistId)
   
     // Query to retrieve albums by artist ID
     const query = `SELECT * FROM Album WHERE authentication_id = ?`;
