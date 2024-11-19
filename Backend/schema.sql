@@ -1,10 +1,10 @@
 CREATE TABLE IF NOT EXISTS Listeners (
-    userName TEXT UNIQUE NOT NULL,
     user_id INTEGER UNIQUE NOT NULL,
+    userName TEXT UNIQUE NOT NULL,
     email TEXT NOT NULL,
     password TEXT NOT NULL,
     country TEXT NOT NULL,
-    PRIMARY KEY(userName, user_id)
+    PRIMARY KEY(user_id)
 );
 
 CREATE TABLE IF NOT EXISTS Artists (
@@ -14,7 +14,7 @@ CREATE TABLE IF NOT EXISTS Artists (
     password TEXT NOT NULL,
     country TEXT NOT NULL,
     style TEXT, 
-    PRIMARY KEY(userName, authentication_id)
+    PRIMARY KEY(authentication_id)
 );
 
 CREATE TABLE IF NOT EXISTS Song (

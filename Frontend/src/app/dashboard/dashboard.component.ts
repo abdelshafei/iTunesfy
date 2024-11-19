@@ -25,6 +25,7 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.search();
     if (this.userRole === 'listener') {
+      this.createPlaylist
       this.loadListenerData();
     } else if (this.userRole === 'artist') {
       this.loadArtistData();
@@ -44,6 +45,10 @@ export class DashboardComponent implements OnInit {
     } else {
       this.searchResults = []; // Clear results if search term is empty
     }
+  }
+
+  createPlaylist(): void {
+    
   }
 
   loadListenerData(): void {

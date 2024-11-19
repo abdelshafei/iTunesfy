@@ -9,12 +9,12 @@ import { Router } from '@angular/router';
 })
 export class RegisterComponent {
   userRole: string | null = localStorage.getItem('userRole');
-  userName = '';
-  email = '';
-  password = '';
-  country = '';
-  style = ''; // Only for artists
-  authentication_id = '' //Only for artists
+  userName: String = '';
+  email: String = '';
+  password: String = '';
+  country: String = '';
+  style : String = ''; // Only for artists
+  authentication_id : String = ''; //Only for artists
 
   constructor(private authService: AuthService, private router: Router) {}
 

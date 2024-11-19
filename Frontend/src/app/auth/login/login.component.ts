@@ -20,8 +20,8 @@ export class LoginComponent {
     const loginData = {
       username: this.username,
       password: this.password,
-      userType: this.userRole,
-      authentication_id: this.userRole === 'artist' ? this.authentication_id : null
+      userType: localStorage.getItem("userRole"),
+      authentication_id: localStorage.getItem("userRole") === 'artist' ? this.authentication_id : null
     };
 
     this.authService.login(loginData).subscribe({
@@ -30,7 +30,7 @@ export class LoginComponent {
         localStorage.setItem('authToken', res.token); // Save the token
         localStorage.setItem('username', this.username);
         // if artist store authID in localStorage
-        if(this.userRole === 'artist') {
+        if(localStorage.getItem("userRole") === 'artist') {
           localStorage.setItem("AuthId", this.authentication_id);
         }
         this.router.navigate(['/dashboard']); // Redirect to dashboard after login

@@ -31,6 +31,7 @@
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
   <h3>Your Playlists</h3>
+  <button id="most-right-side-button" (click)="createPlaylist()"> Create Playlist </button>
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <ul>
