@@ -17,7 +17,9 @@ import { FormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { ArtistService } from './services/artist.service'
 import { ListenerService } from './services/listener.service'
-import { SearchService } from './services/search.service'
+import { SearchService } from './services/search.service';
+import { AlbumsComponent } from './albums/albums.component';
+import { SongsComponent } from './songs/songs.component'
 
 
 
@@ -30,6 +32,8 @@ import { SearchService } from './services/search.service'
     RegisterComponent,
     RoleSelectionComponent,
     AuthChoiceComponent,
+    AlbumsComponent,
+    SongsComponent,
   ],
   imports: [
     BrowserModule,

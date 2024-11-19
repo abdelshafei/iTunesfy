@@ -5,6 +5,7 @@ const searchTerms = require('../config/iTunesTerms'); // Import hard-wired searc
 // Function to fetch and save data for predefined search terms
 const fetchAndSaveItunesData = async () => {
     let albumIdCounter = 0;
+    let songIdCounter = 0;
     for (const [artistName, authId] of Object.entries(searchTerms)) {
         console.log(`Fetching albums for: ${artistName} with authentication ID: ${authId}`);
 
@@ -44,8 +45,8 @@ const fetchAndSaveItunesData = async () => {
 
                 // Insert album into the database
                 db.run(
-                    `INSERT OR IGNORE INTO Album (album_title, authentication_id) VALUES (?, ?)`,
-                    [albumTitle, authId],
+                    `INSERT OR IGNORE INTO Album (album_id, album_title, authentication_id) VALUES (?, ?, ?)`,
+                    [albumIdCounter, albumTitle, authId],
                     (err) => {
                         if (err) {
                             console.error("Error inserting album:", err.message);
@@ -67,13 +68,14 @@ const fetchAndSaveItunesData = async () => {
                 const songs = songResponse.data.results.filter((item) => item.wrapperType === 'track');
 
                 for (const song of songs) {
+                    songIdCounter++;
                     const songTitle = song.trackName;
                     const duration = song.trackTimeMillis;
 
                     // Insert song into the database
                     db.run(
-                        `INSERT OR IGNORE INTO Song (song_title, duration, album_id) VALUES (?, ?, ?)`,
-                        [songTitle, duration, albumIdCounter],
+                        `INSERT OR IGNORE INTO Song (song_id, song_title, duration, album_id) VALUES (?, ?, ?, ?)`,
+                        [songIdCounter, songTitle, duration, albumIdCounter],
                         (err) => {
                             if (err) {
                                 console.error("Error inserting song:", err.message);

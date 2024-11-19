@@ -2,7 +2,7 @@
 <hr id="search-line">
 
 <!-- Search Input -->
-<div>
+<div id="search-block">
   <input
   type="text"
   placeholder="Search for artists, songs, playlists, or albums"
@@ -14,10 +14,10 @@
     <h3>Search Results</h3>
     <ul>
       <li *ngFor="let result of searchResults">
-        <span *ngIf="result.type === 'artist'">🎤 {{ result.name }}</span>
-        <span *ngIf="result.type === 'song'">🎶  {{ result.name }}</span>
-        <span *ngIf="result.type === 'playlist'">📜  {{ result.name }}</span>
-        <span *ngIf="result.type === 'album'">💿  {{ result.name }}</span>
+        <div *ngIf="result.type === 'artist'" class="search-artist">🎤 {{ result.name }}</div>
+        <div *ngIf="result.type === 'song'" id="search-item">🎶  {{ result.name }}</div>
+        <div *ngIf="result.type === 'playlist'" id="search-item">📜  {{ result.name }}</div>
+        <div *ngIf="result.type === 'album'" id="search-item">💿  {{ result.name }}</div>
       </li>
     </ul>
   </div>

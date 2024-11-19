@@ -5,6 +5,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { RoleSelectionComponent } from "./auth/role-selection/role-selection.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+
 import { NgModule } from "@angular/core";
 
 const routes: Routes = [
@@ -13,7 +14,8 @@ const routes: Routes = [
   { path: 'auth-choice', component: AuthChoiceComponent },
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] } // User's dashboard after login
+  { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },// User's dashboard after login
+  // ( path: 'albums', component: )
 ];
 
 @NgModule({
