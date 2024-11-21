@@ -42,12 +42,113 @@ li {
 }
 
 .search-artist {
-    height: 50px;
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin: 5px 0; 
 }
 
 .search-artist:hover {
-    border-color:rgb(43, 42, 42);
-    border: solid;
+    border: solid rgb(92, 92, 92);
     size-adjust: 5px;
     cursor: pointer
+}
+
+.search-artist:active {
+    border: solid 2px rgb(13, 13, 13);
+}
+
+.artistImg {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.search-song {
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin: 5px 0; 
+}
+
+.search-song:hover {
+    border: solid rgb(92, 92, 92);
+    size-adjust: 5px;
+    cursor: pointer
+}
+
+.search-song:active {
+    border: solid 2px rgb(13, 13, 13);
+}
+
+.musicImg {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.songName {
+    flex-grow: 1; /* Takes up available space between the icon and duration */
+    font-size: 16px;
+}
+  
+.duration {
+    text-align: right; /* Align the text within this span */
+    font-size: 14px;
+    color: #555; /* Optional: gray text */
+    flex-grow: 1;
+}
+
+.search-album {
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin: 5px 0; 
+}
+
+.search-album:hover {
+    border: solid rgb(92, 92, 92);
+    size-adjust: 5px;
+    cursor: pointer
+}
+
+.search-album:active {
+    border: solid 2px rgb(13, 13, 13);
+}
+
+.albumImg {
+    height: 20px;
+    width: 20px;
+    margin-right: 10px;
+}
+
+.search-playlist {
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin: 5px 0; 
+}
+
+.search-playlist:hover {
+    border: solid rgb(92, 92, 92);
+    size-adjust: 5px;
+    cursor: pointer
+}
+
+.search-playlist:active {
+    border: solid 2px rgb(13, 13, 13);
+}
+
+.playlistImg {
+    height: 20px; /* Set image size */
+    width: 20px; /* Make the image square */
+    margin-right: 10px; /* Space between image and text */
 }

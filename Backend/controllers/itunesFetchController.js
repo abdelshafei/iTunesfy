@@ -6,8 +6,8 @@ const searchTerms = require('../config/iTunesTerms'); // Import hard-wired searc
 const fetchAndSaveItunesData = async () => {
     let albumIdCounter = 0;
     let songIdCounter = 0;
-    for (const [artistName, authId] of Object.entries(searchTerms)) {
-        console.log(`Fetching albums for: ${artistName} with authentication ID: ${authId}`);
+    for (const [artistName, { id: authId, genre: style }]  of Object.entries(searchTerms)) {
+        console.log(`Fetching albums for: ${artistName} with authentication ID: ${authId} specalizing in style: ${style}`);
 
         try {
             // Fetch albums for the artist
@@ -35,11 +35,13 @@ const fetchAndSaveItunesData = async () => {
                 // Insert artist if not already in Artists table
                 db.run(
                     `INSERT OR IGNORE INTO Artists (userName, authentication_id, email, password, country, style) VALUES (?, ?, ?, ?, ?, ?)`,
-                    [artistName, authId, `${artistName}@gmail.com`, "hashed_password", 'USA', 'Music'], // Adjust fields as needed
+                    [artistName, authId, `${artistName}@gmail.com`, "hashed_password", 'USA', style], // Adjust fields as needed
                     (err) => {
                         if (err) {
                             console.error("Error inserting artist:", err.message);
                         }
+
+                        if(this.change === 0) console.error("artists table not changing")
                     }
                 );
 

@@ -25,7 +25,6 @@ export class DashboardComponent implements OnInit {
   ngOnInit(): void {
     this.search();
     if (this.userRole === 'listener') {
-      this.createPlaylist
       this.loadListenerData();
     } else if (this.userRole === 'artist') {
       this.loadArtistData();
@@ -47,11 +46,6 @@ export class DashboardComponent implements OnInit {
     }
   }
 
-  createPlaylist(): void {
-    //if clicked
-    
-  }
-
   loadListenerData(): void {
     if (this.userRole === 'listener') {
       this.listenerService.getPlaylists().subscribe(data => {
@@ -69,5 +63,14 @@ export class DashboardComponent implements OnInit {
         this.albums = data;
       });
     }
+  }
+
+  convertMillisecondsToTimestamp(milliseconds: number): string {
+    const totalSeconds = Math.floor(milliseconds / 1000);
+    const minutes = Math.floor(totalSeconds / 60);
+    const seconds = totalSeconds % 60;
+    const formattedSeconds = seconds < 10 ? `0${seconds}` : seconds;
+
+    return `${minutes}:${formattedSeconds}`;
   }
 }

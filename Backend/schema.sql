@@ -39,7 +39,7 @@ CREATE TABLE IF NOT EXISTS PlayList (
     playlist_name TEXT UNIQUE NOT NULL,
     like_counter INTEGER NOT NULL,
     play_counter INTEGER NOT NULL,
-    PRIMARY KEY(user_id, playList_name)
+    PRIMARY KEY(user_id, playlist_name)
     FOREIGN KEY (user_id) REFERENCES Listeners(user_id)
 );
 

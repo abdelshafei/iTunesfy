@@ -55,17 +55,48 @@ exports.register = async (req, res) => {
       }
     );
   } else {
-    // Default to listener registration
+  // Default to listener registration
 
+  console.log(req.body);
     db.run(
       `INSERT OR IGNORE INTO Listeners (userName, email, password, country) VALUES (?, ?, ?, ?)`,
       [userName, email, password, country],
       function (err) {
-          if (err)
-            return res.status(500).json({ message: "Error registering listener." });
-          if(this.changes === 0)
-            return res.status(400).json({ message: "User Name already in use!"})
-          res.status(201).json({ message: "Listener registered successfully" });
+        if (err) {
+          return res.status(500).json({ message: "Error registering listener." });
+        }
+
+        if (this.changes === 0) {
+          return res.status(400).json({ message: "User Name already in use!" });
+        }
+
+        // Retrieve the inserted user's ID to insert a default playlist
+        db.get(
+          `SELECT user_id FROM Listeners WHERE userName = ?`,
+          [userName],
+          (err, row) => {
+            if (err) {
+              return res.status(500).json({ message: "Error retrieving user ID." });
+            }
+
+            const userId = row.user_id;
+
+            // Insert default playlist for the user
+            db.run(
+              `INSERT OR IGNORE INTO Playlist (user_id, playlist_name, like_counter, play_counter) VALUES (?, ?, ?, ?)`,
+              [userId, "Liked Songs", 0, 0],
+              function (err) {
+                if (err) {
+                  return res.status(500).json({ message: "Error creating default playlist." });
+                }
+
+                return res
+                  .status(201)
+                  .json({ message: "Listener registered successfully" });
+              }
+            );
+          }
+        );
       }
     );
   }
@@ -80,10 +111,10 @@ exports.login = (req, res) => {
     const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
     if(userType === 'listener') {
         db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-            if (err || !user) return res.status(400).json({ message: 'Invalid credentials' });
+            if (err || !user) return res.status(400).json({ message: 'Invalid credentials1' });
             // Verify password
             const validPassword = password === user.password
-            if (!validPassword) return res.status(400).json({ message: 'Invalid credentials' });
+            if (!validPassword) return res.status(400).json({ message: 'Invalid credentials2' });
 
             // Generate JWT token
             const token = jwt.sign(

@@ -10,7 +10,9 @@ const db = require('../config/db');
 // };
 
 exports.getUserPlaylists = async (req, res) => {
-    const listenername = req.params.username;
+    const listenername = req.params.listenername;
+
+    console.log(req.params)
 
     // Query to retrieve albums by artist ID
     const query = `

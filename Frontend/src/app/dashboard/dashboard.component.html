@@ -14,10 +14,24 @@
     <h3>Search Results</h3>
     <ul>
       <li *ngFor="let result of searchResults">
-        <div *ngIf="result.type === 'artist'" class="search-artist">🎤 {{ result.name }}</div>
-        <div *ngIf="result.type === 'song'" id="search-item">🎶  {{ result.name }}</div>
-        <div *ngIf="result.type === 'playlist'" id="search-item">📜  {{ result.name }}</div>
-        <div *ngIf="result.type === 'album'" id="search-item">💿  {{ result.name }}</div>
+        <div *ngIf="result.type === 'artist'" class="search-artist" style="width: 75%;">
+          <img src="../../assets/artistPFP.png" class="artistImg"/>
+          <span class="artistName"> {{ result.name }} </span>
+          <span class="style"> {{ result.style}} </span>
+        </div>
+        <div *ngIf="result.type === 'song'" class="search-song" style="width: 75%;">
+          <img src="../../assets/music-icon.png" class="musicImg"/>  
+          <span class="songName">{{ result.name }}</span>
+          <span class="duration"> {{ convertMillisecondsToTimestamp(result.style) }} </span>
+        </div>
+        <div *ngIf="result.type === 'playlist'" class="search-playlist" style="width: 75%;">
+          <img src="../../assets/playlist-icon.png" class="playlistImg"/>
+          {{ result.name }}
+        </div>
+        <div *ngIf="result.type === 'album'" class="search-album" style="width: 75%;">  
+          <img src="../../assets/vinyl-record.png" class="albumImg"/>
+          {{ result.name }}
+        </div>
       </li>
     </ul>
   </div>
@@ -31,11 +45,15 @@
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
   <h3>Your Playlists</h3>
-  <button id="most-right-side-button" (click)="createPlaylist()"> Create Playlist </button>
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <ul>
-    <li *ngFor="let playlist of playlists">{{ playlist.name }}</li>
+    <li *ngFor="let playlist of playlists">
+      <div class="search-playlist" style="width: 35%;">
+        <img src="../../assets/playlist-icon.png" class="playlistImg"/>
+        {{ playlist.playlist_name }}
+      </div>
+    </li>
   </ul>
 
   <hr id="small-line-section">
@@ -44,7 +62,12 @@
   <hr id="small-line">
   <div *ngIf="likedPlaylists.length === 0">You have no liked playlists.</div>
   <ul>
-    <li *ngFor="let likedPlaylist of likedPlaylists">{{ likedPlaylist.name }}</li>
+    <li *ngFor="let likedPlaylist of likedPlaylists">
+      <div class="search-playlist" style="width: 35%;">
+        <img src="../../assets/playlist-icon.png" class="playlistImg"/>
+        {{ likedPlaylist.playlist_name  }}
+      </div>
+    </li>
   </ul>
 
 </div>
@@ -55,6 +78,11 @@
   <hr id="small-line">
   <div *ngIf="albums.length === 0">You have no albums.</div>
   <ul>
-    <li *ngFor="let album of albums">{{ album.album_title }}</li>
+    <li *ngFor="let album of albums">        
+      <div class="search-album" style="width: 35%;">  
+      <img src="../../assets/vinyl-record.png" class="albumImg"/>
+      {{ album.album_title }}
+      </div>
+    </li>
   </ul>
 </div>
