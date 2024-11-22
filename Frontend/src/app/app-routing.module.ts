@@ -5,6 +5,7 @@ import { LoginComponent } from "./auth/login/login.component";
 import { RegisterComponent } from "./auth/register/register.component";
 import { RoleSelectionComponent } from "./auth/role-selection/role-selection.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
+import { AlbumDetailComponent } from './album-detail/album-detail.component';
 
 import { NgModule } from "@angular/core";
 
@@ -15,7 +16,7 @@ const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: 'login', component: LoginComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [AuthGuard] },// User's dashboard after login
-  // ( path: 'albums', component: )
+  { path: 'album/:albumId', component: AlbumDetailComponent }
 ];
 
 @NgModule({

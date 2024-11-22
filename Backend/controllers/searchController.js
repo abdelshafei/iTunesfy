@@ -9,13 +9,13 @@ exports.getSearchTerms = (req, res) => {
 
   // SQL query to search across multiple tables with partial matching
   const sql = `
-    SELECT 'artist' AS type, userName AS name, style FROM Artists WHERE userName LIKE ?
+    SELECT 'artist' AS type, userName AS name, style, authentication_id AS auth FROM Artists WHERE userName LIKE ?
     UNION ALL
-    SELECT 'album' AS type, album_title AS name, authentication_id FROM Album WHERE album_title LIKE ?
+    SELECT 'album' AS type, album_title AS name, authentication_id, album_id FROM Album WHERE album_title LIKE ?
     UNION ALL
-    SELECT 'song' AS type, song_title AS name, duration FROM Song WHERE song_title LIKE ?
+    SELECT 'song' AS type, song_title AS name, duration, song_id FROM Song WHERE song_title LIKE ?
     UNION ALL
-    SELECT 'playlist' AS type, playlist_name AS name, user_id FROM PlayList WHERE playlist_name LIKE ?
+    SELECT 'playlist' AS type, playlist_name AS name, user_id, user_id FROM PlayList WHERE playlist_name LIKE ?
   `;
 
   // Execute the query with the same term used for each LIKE condition
