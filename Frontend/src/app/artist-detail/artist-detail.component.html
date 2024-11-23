@@ -1,0 +1,13 @@
+<div class="artist-header">
+    <img src="../../assets/artistPFP.png" class="artistImg"/>
+    <h2> {{ artistName }} </h2>
+</div>
+<hr style="margin-bottom: 50px;">
+<ul>
+  <li *ngFor="let album of albums">
+    <div class="album" style="width: 75%;" [routerLink]="['/album', album.album_id, album.album_title]">
+        <img src="../../assets/vinyl-record.png" class="albumImg"/>  
+        <span class="albumName">{{ album.album_title }}</span>
+      </div>
+  </li>
+</ul>

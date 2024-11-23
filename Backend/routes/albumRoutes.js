@@ -8,6 +8,6 @@ router.get('/artist/:artistId', authMiddleware, albumController.getUserAlbum);
 
 router.get('/:albumId', authMiddleware, albumController.getAlbumSongs);
 
-router.get('/:artistId', authMiddleware, albumController.getArtistAlbums)
+router.get('/album/:artistId', authMiddleware, albumController.getArtistAlbums)
 
 module.exports = router;

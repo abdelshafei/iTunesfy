@@ -1,9 +1,5 @@
-input {
-    width : 70%;
-}
-
 hr {
-    margin-bottom: 50px;
+    margin-bottom: 10px;
 }
 
 #search-line {
@@ -32,9 +28,19 @@ hr {
     
 }
 
-#search-block {
+.search-block {
     height: 300px;
     overflow-y: auto;
+}
+
+.content {
+    display: flex; 
+    justify-content: center;
+    align-items: center;
+}
+
+.search-bar input {
+    width: 70%
 }
 
 li {
@@ -163,4 +169,22 @@ li {
     height: 20px; /* Set image size */
     width: 20px; /* Make the image square */
     margin-right: 10px; /* Space between image and text */
+}
+
+#albums {
+    width: 50%;
+    display: flex;
+    justify-content: center; 
+}
+
+#playlists {
+    width: 50%;
+    display: flex;
+    justify-content: center; 
+}
+
+#likedPlaylists {
+    width: 50%;
+    display: flex;
+    justify-content: center; 
 }

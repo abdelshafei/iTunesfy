@@ -1,9 +1,10 @@
-<h2>Dashboard</h2>
+<h2 style="text-align: center;">HOME</h2>
 <hr id="search-line">
 
 <!-- Search Input -->
-<div id="search-block">
-  <input
+<div class="search-block">
+  <input 
+  style="width: 70%;"
   type="text"
   placeholder="Search for artists, songs, playlists, or albums"
   [(ngModel)]="searchTerm"
@@ -11,24 +12,23 @@
   
   <!-- Display Search Results -->
   <div *ngIf="searchResults.length > 0">
-    <h3>Search Results</h3>
     <ul>
       <li *ngFor="let result of searchResults">
-        <div *ngIf="result.type === 'artist'" class="search-artist" style="width: 75%;">
+        <div *ngIf="result.type === 'artist'" class="search-artist" style="width: 70%;" [routerLink]="['/artist', result.auth, result.name]">
           <img src="../../assets/artistPFP.png" class="artistImg"/>
           <span class="artistName"> {{ result.name }} </span>
           <span class="style"> 𝑺𝒕𝒚𝒍𝒆: {{ result.style }} </span>
         </div>
-        <div *ngIf="result.type === 'song'" class="search-song" style="width: 75%;">
+        <div *ngIf="result.type === 'song'" class="search-song" style="width: 70%;">
           <img src="../../assets/music-icon.png" class="musicImg"/>  
           <span class="songName">{{ result.name }}</span>
           <span class="duration"> {{ result.style | date:'mm:ss' }} </span>
         </div>
-        <div *ngIf="result.type === 'playlist'" class="search-playlist" style="width: 75%;">
+        <div *ngIf="result.type === 'playlist'" class="search-playlist" style="width: 70%;" [routerLink]="['/playlist', result.name, result.style]">
           <img src="../../assets/playlist-icon.png" class="playlistImg"/>
           {{ result.name }}
         </div>
-        <div *ngIf="result.type === 'album'" class="search-album" style="width: 75%;" [routerLink]="['/album', result.auth]">  
+        <div *ngIf="result.type === 'album'" class="search-album" style="width: 70%;" [routerLink]="['/album', result.auth, result.name]">  
           <img src="../../assets/vinyl-record.png" class="albumImg"/>
           {{ result.name }}
         </div>
@@ -44,45 +44,35 @@
 <hr id="search-line">
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
-  <h3>Your Playlists</h3>
+  <h3 style="width: 50%; text-align: center;">Your Playlists</h3>
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
-  <ul>
-    <li *ngFor="let playlist of playlists">
-      <div class="search-playlist" style="width: 35%;">
-        <img src="../../assets/playlist-icon.png" class="playlistImg"/>
-        {{ playlist.playlist_name }}
-      </div>
-    </li>
-  </ul>
-
-  <hr id="small-line-section">
-
-  <h3>Liked Playlists</h3>
-  <hr id="small-line">
-  <div *ngIf="likedPlaylists.length === 0">You have no liked playlists.</div>
-  <ul>
-    <li *ngFor="let likedPlaylist of likedPlaylists">
-      <div class="search-playlist" style="width: 35%;">
-        <img src="../../assets/playlist-icon.png" class="playlistImg"/>
-        {{ likedPlaylist.playlist_name  }}
-      </div>
-    </li>
-  </ul>
+  <div id="playlists">
+    <ul>
+      <li *ngFor="let playlist of playlists">
+        <div class="search-playlist" style="width: 200%;" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">
+          <img src="../../assets/playlist-icon.png" class="playlistImg"/>
+          {{ playlist.playlist_name }}
+        </div>
+      </li>
+    </ul>
+  </div>
 
 </div>
 
 <!-- Show artist's albums -->
 <div *ngIf="userRole === 'artist'">
-  <h3>Your Albums</h3>
+  <h3 style="width: 50%; text-align: center;">Your Albums</h3>
   <hr id="small-line">
   <div *ngIf="albums.length === 0">You have no albums.</div>
-  <ul>
-    <li *ngFor="let album of albums">        
-      <div class="search-album" style="width: 35%;" [routerLink]="['/album', album.album_id]">  
-      <img src="../../assets/vinyl-record.png" class="albumImg"/>
-      {{ album.album_title }}
-      </div>
-    </li>
-  </ul>
+  <div id="albums">
+    <ul>
+      <li *ngFor="let album of albums">        
+        <div class="search-album" style="width: 200%;" [routerLink]="['/playlist', album.album_id, album.album_title]">  
+        <img src="../../assets/vinyl-record.png" class="albumImg"/>
+        {{ album.album_title }}
+        </div>
+      </li>
+    </ul>
+  </div>
 </div>

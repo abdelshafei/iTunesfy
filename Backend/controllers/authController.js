@@ -66,7 +66,7 @@ exports.register = async (req, res) => {
           return res.status(500).json({ message: "Error registering listener." });
         }
 
-        if (this.changes === 0) {
+        if (this.change == 0) {
           return res.status(400).json({ message: "User Name already in use!" });
         }
 
@@ -83,10 +83,11 @@ exports.register = async (req, res) => {
 
             // Insert default playlist for the user
             db.run(
-              `INSERT OR IGNORE INTO Playlist (user_id, playlist_name, like_counter, play_counter) VALUES (?, ?, ?, ?)`,
-              [userId, "Liked Songs", 0, 0],
+              `INSERT OR IGNORE INTO Playlist (user_id, playlist_name, play_counter) VALUES (?, ?, ?)`,
+              [userId, "Liked Songs", 0],
               function (err) {
                 if (err) {
+                  console.log("Database Error: ", err)
                   return res.status(500).json({ message: "Error creating default playlist." });
                 }
 

@@ -1,34 +1,28 @@
-<h2>Register as {{ userRole | titlecase }}</h2>
+<h2 style="text-align: center;">Register as {{ userRole | titlecase }}</h2>
 <hr>
-<form (ngSubmit)="register()">
-  <label>Username</label>
-  <br>
-  <input placeholder="JohnDoe" type="text" [(ngModel)]="userName" name="userName" required>
-  <br>
-  <label>Email</label>
-  <br>
-  <input placeholder="john.doe@gmail.com" type="email" [(ngModel)]="email" name="email" required>
-  <br>
-  <label>Password</label>
-  <br>
-  <input placeholder="John123" type="password" [(ngModel)]="password" name="password" required>
-  <br>
-  <label>Country</label>
-  <br>
-  <input placeholder="e.g, USA, Canada, etc." type="text" [(ngModel)]="country" name="country" required>
-  <br>
-  <div *ngIf="userRole === 'artist'">
-    <label>Music Style</label>
+<div class="container">
+  <form (ngSubmit)="register()">
+    <input placeholder="JohnDoe" type="text" [(ngModel)]="userName" name="userName" required>
     <br>
-    <input placeholder="e.g, Hip Hop, Country, Jazz, etc." type="text" [(ngModel)]="style" name="style" required>
+    <input placeholder="john.doe@gmail.com" type="email" [(ngModel)]="email" name="email" required>
     <br>
-    <label>Authentication ID</label>
+    <input placeholder="John123" type="password" [(ngModel)]="password" name="password" required>
     <br>
-    <input placeholder="565XXX" [(ngModel)]="authentication_id" name="authentication_id" required>
-  </div>
-  <br>
-  <div id="container">
-    <button type="submit">Register</button>
-  </div>
-</form>
+    <input placeholder="e.g, USA, Canada, etc." type="text" [(ngModel)]="country" name="country" required>
+    <br>
+    <div *ngIf="userRole === 'artist'">
+      <label>Music Style</label>
+      <br>
+      <input placeholder="e.g, Hip Hop, Country, Jazz, etc." type="text" [(ngModel)]="style" name="style" required>
+      <br>
+      <label>Authentication ID</label>
+      <br>
+      <input placeholder="565XXX" [(ngModel)]="authentication_id" name="authentication_id" required>
+    </div>
+    <br>
+    <div class="container">
+      <button mat-raised-button type="submit">Register</button>
+    </div>
+  </form>
+</div>
 

@@ -11,6 +11,8 @@ router.get('/ownPlaylist/:listenername', authMiddleware, playlistController.getU
 
 router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists)
 
+router.get('/:playlistName/:UserId', authMiddleware, playlistController.getPlaylistSongs)
+
 // router.get('/remove-LikedPlaylist/:listenername', authMiddleware, playlistController.removeUserLikedPlaylists)
 
 // router.get('/add-LikedPlaylist/:listenername', authMiddleware, playlistController.addUserLikedPlaylists)

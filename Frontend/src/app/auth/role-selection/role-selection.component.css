@@ -11,17 +11,35 @@ hr {
 }
 
 button {
-    height: 30px;
-    width: 150px;
-    background-color: chartreuse;
     border-radius: 15px;
     border: none;
     font-weight: bold;
     cursor: pointer;
     margin-right: 100px;
     margin-left: 100px;
+    text-align: center;
+}
+
+.mat-mdc-raised-button {
+    background-color: red !important;
+
+    .mdc-button__label {
+        color: white;
+    }
+    
 }
 
 h2 {
     text-align: center;
+}
+
+@keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: scale(0.95);
+    }
+    to {
+      opacity: 1;
+      transform: scale(1);
+    }
 }

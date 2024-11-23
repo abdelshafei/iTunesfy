@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AuthService } from '../auth.service';
 import { Router } from '@angular/router';
+import { FormControl, Validators } from '@angular/forms';
 
 @Component({
   selector: 'app-login',
@@ -8,9 +9,11 @@ import { Router } from '@angular/router';
   styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
+  hide = true;
+
   userRole: string | null = localStorage.getItem('userRole');
   username = '';
-  password = '';
+  passWord = '';
   authentication_id = '';
   passwordFieldType: string = 'password';
 
@@ -19,7 +22,7 @@ export class LoginComponent {
   login() {
     const loginData = {
       username: this.username,
-      password: this.password,
+      password: this.passWord,
       userType: localStorage.getItem("userRole"),
       authentication_id: localStorage.getItem("userRole") === 'artist' ? this.authentication_id : null
     };

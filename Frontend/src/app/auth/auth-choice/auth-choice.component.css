@@ -20,6 +20,18 @@ button {
     cursor: pointer;
     margin-right: 100px;
     margin-left: 100px;
+    text-align: center; 
+    white-space: nowrap;
+}
+
+.mat-mdc-raised-button {
+    background-color: rgb(37, 203, 51) !important;
+
+    .mdc-button__label {
+        color: white;
+        padding: 10px 30px;
+    }
+    
 }
 
 h2, h3 {

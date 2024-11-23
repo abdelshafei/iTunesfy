@@ -9,6 +9,7 @@ import { AlbumService } from '../services/album.service';
 })
 export class AlbumDetailComponent implements OnInit {
   albumId: string | null = null;
+  albumName: string | null = null;
   songs: any[] = [];
 
   constructor(
@@ -19,6 +20,7 @@ export class AlbumDetailComponent implements OnInit {
   ngOnInit(): void {
     // Get album ID from route
     this.albumId = this.route.snapshot.paramMap.get('albumId');
+    this.albumName = this.route.snapshot.paramMap.get('albumName');
     if (this.albumId) {
       this.loadSongs();
     }

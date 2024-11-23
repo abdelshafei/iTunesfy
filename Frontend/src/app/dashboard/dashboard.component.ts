@@ -51,9 +51,6 @@ export class DashboardComponent implements OnInit {
       this.listenerService.getPlaylists().subscribe(data => {
         this.playlists = data;
       });
-      this.listenerService.getLikedPlaylists().subscribe(data => {
-        this.likedPlaylists = data;
-      });
     }
   }
 

@@ -1,10 +1,10 @@
-.album-header {
+.playlist-header {
     display: flex;
     align-items: center; /* Vertically align the items */
     gap: 10px; /* Add spacing between the image and text */
 }
   
-.albumImg {
+.playlistImg {
     height: 40px;
     width: 40px;
     margin-right: 10px;

@@ -11,14 +11,20 @@ import { RegisterComponent } from './auth/register/register.component';
 import { RoleSelectionComponent } from './auth/role-selection/role-selection.component';
 import { AuthChoiceComponent } from './auth/auth-choice/auth-choice.component';
 import {AppRoutingModule} from './app-routing.module';
-import { FormsModule } from '@angular/forms';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { AuthService } from './auth/auth.service';
 import { ArtistService } from './services/artist.service'
 import { ListenerService } from './services/listener.service'
 import { SearchService } from './services/search.service';
 import { AlbumDetailComponent } from './album-detail/album-detail.component';
+import { ArtistDetailComponent } from './artist-detail/artist-detail.component';
+import { PlaylistDetailComponent } from './playlist-detail/playlist-detail.component';
 
-
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { MatButtonModule } from '@angular/material/button'; 
+import { MatFormFieldModule } from '@angular/material/form-field'
+import { MatInputModule } from '@angular/material/input'
+import { MatIconModule } from '@angular/material/icon'
 
 
 @NgModule({
@@ -30,13 +36,21 @@ import { AlbumDetailComponent } from './album-detail/album-detail.component';
     RegisterComponent,
     RoleSelectionComponent,
     AuthChoiceComponent,
-    AlbumDetailComponent
+    AlbumDetailComponent,
+    ArtistDetailComponent,
+    PlaylistDetailComponent,
   ],
   imports: [
     BrowserModule,
     AppRoutingModule,
     FormsModule,
-    HttpClientModule
+    ReactiveFormsModule,
+    HttpClientModule,
+    BrowserAnimationsModule,
+    MatButtonModule,
+    MatFormFieldModule,
+    MatInputModule,
+    MatIconModule
   ],
   providers: [
     AuthService,

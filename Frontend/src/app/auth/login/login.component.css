@@ -1,6 +1,6 @@
 form {
     max-width: 400px; /* Set a max width for the form */ 
-  }
+}
   
 .form-group {
     display: flex;
@@ -23,13 +23,6 @@ input {
     width: 150%;
 }
 
-#container {
-    display: flex; /* Make it a flex container */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    height: 100%;
-}
-
 button {
     height: 30px;
     width: 100px;
@@ -44,27 +37,37 @@ hr {
     margin-bottom: 50px;
 }
 
-form i {
-    margin-left: -30px;
+form {
+    width: 100%;
     cursor: pointer;
-}
-
-.password-container {
-    position: relative;
-    display: flex;
     align-items: center;
 }
 
-#password {
-    margin-bottom: 0px;
+.form-container {
+    display: flex;
+    flex-direction: column;
+
+    .mdc-text-field {
+        background-color: blue !important;
+    }
 }
   
-#togglePassword {
-    position: absolute;
-    right: 10px;
-    top: 50%; /* Center vertically */
-    transform: translateY(-50%);
-    cursor: pointer;
-    color: gray;
-    z-index: 10; /* Ensure it appears on top */
+.form-container > * {
+    width: 100%;
+}
+
+.container {
+    width: 100%;
+    display: flex; /* Make it a flex container */
+    justify-content: center; /* Center horizontally */
+    align-items: center; /* Center vertically */
+}
+
+.mat-mdc-raised-button {
+    background-color: rgb(0, 115, 255) !important;
+
+    .mdc-button__label {
+        color: white;
+    }
+    
 }
