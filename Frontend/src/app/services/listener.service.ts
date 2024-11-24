@@ -35,4 +35,20 @@ export class ListenerService {
 
     return this.http.get<any[]>(`${this.apiUrl}/playlists/${playlistName}/${userId}}`, { headers });
   }
+
+  incrementPlayCount(playlistName: string, userId: string) : Observable<any[]> {
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+
+    console.log("Playlist name: ", playlistName);
+    console.log("User's Id: ", userId);
+    
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/incPlayCount/${playlistName}/${userId}`, { headers });
+  }
 }

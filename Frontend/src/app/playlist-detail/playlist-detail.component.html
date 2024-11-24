@@ -1,6 +1,9 @@
 <div class="playlist-header">
     <img src="../../assets/playlist-icon.png" class="playlistImg"/>
     <h2> {{ playlistName }} </h2>
+    <button (click)="togglePlayPause()" class="play-pause-btn">
+        <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+      </button>
 </div>
 <hr style="margin-bottom: 50px;">
 <ul>

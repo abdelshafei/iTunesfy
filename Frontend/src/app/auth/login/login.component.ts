@@ -35,6 +35,8 @@ export class LoginComponent {
         // if artist store authID in localStorage
         if(localStorage.getItem("userRole") === 'artist') {
           localStorage.setItem("AuthId", this.authentication_id);
+        } else {
+          localStorage.removeItem('AuthId');
         }
         this.router.navigate(['/dashboard']); // Redirect to dashboard after login
       },

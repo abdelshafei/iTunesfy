@@ -72,3 +72,32 @@ exports.getPlaylistSongs = async(req, res) => {
   });
 
 };
+
+exports.incPlaylistPlayCount = async(req, res) => {
+  const { playlistName, UserId } = req.params;
+
+  console.log(req.params)
+
+  console.log("User ID:", UserId);
+  console.log("Playlist Name:", playlistName);
+
+  const query = `
+  UPDATE Playlist SET play_counter = play_counter + 1 
+  WHERE user_id = ? AND playlist_name = ?
+  `
+
+  db.run(query, [UserId, playlistName], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to increment playlist play counter" });
+    }
+
+    if (this.change == 0) {
+      console.log("no changes")
+      return res.status(400).json({ message: "no play counter has updated!" });
+    }
+
+
+    res.status(200).json({ message: "play counter updated"});
+  });
+}

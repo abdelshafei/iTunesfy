@@ -11,6 +11,7 @@ export class PlaylistDetailComponent {
   playlistName: string | null = null;
   userId: string | null = null;
   songs: any[] = [];
+  isPlaying: boolean = false;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,5 +36,22 @@ export class PlaylistDetailComponent {
         console.error('Failed to load songs:', err);
       }
     );
+  }
+
+  togglePlayPause(): void {
+    this.isPlaying = !this.isPlaying;
+
+    if (this.isPlaying) {
+      this.incrementPlayCounter();
+    }
+  }
+
+  incrementPlayCounter(): void {
+    console.log("Playlist Name: ", this.playlistName);
+    console.log("user Id: ", this.userId)
+    this.listenerService.incrementPlayCount(this.playlistName!, this.userId!).subscribe({
+      next: () => console.log('Play count incremented!'),
+      error: (err) => console.error('Failed to increment play count', err)
+    });
   }
 }

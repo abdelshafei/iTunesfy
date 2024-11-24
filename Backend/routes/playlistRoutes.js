@@ -9,9 +9,11 @@ const router = express.Router();
 // Protected route to get a user's playlists
 router.get('/ownPlaylist/:listenername', authMiddleware, playlistController.getUserPlaylists);
 
-router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists)
+router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists);
 
-router.get('/:playlistName/:UserId', authMiddleware, playlistController.getPlaylistSongs)
+router.get('/:playlistName/:UserId', authMiddleware, playlistController.getPlaylistSongs);
+
+router.get('/incPlayCount/:playlistName/:UserId', authMiddleware, playlistController.incPlaylistPlayCount)
 
 // router.get('/remove-LikedPlaylist/:listenername', authMiddleware, playlistController.removeUserLikedPlaylists)
 
