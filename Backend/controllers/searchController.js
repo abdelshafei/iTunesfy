@@ -34,7 +34,23 @@ exports.getSongsForPlaylist = (req, res) => {
   const {playlistName, userId, searchTerm} = req.params
 
   const query = `
-  SELECT * FROM song 
-  WHERE 
+    SELECT s.*
+    FROM song s
+    WHERE s.song_id NOT IN (
+      SELECT ps.song_id
+      FROM playlist_song ps
+      WHERE ps.playlist_name = ? 
+      AND ps.user_id = ?
+    )
+    AND s.song_title LIKE ?
   `
+
+  db.all(query, [playlistName, userId, searchTerm], (err, rows) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to retrieve search results" });
+    }
+
+    res.status(200).json(rows);
+  });
 }

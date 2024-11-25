@@ -16,7 +16,11 @@ Installing node_modules & Launching the project:
 
 Angular Version:
 
-    The Angular CLI version i am using this project on is 16.2.1, so maybe try to install/update Angular upto this version or beyond to run the project.
+    The Angular CLI version i am using on this project is 16.2.1, so maybe try to install/update Angular upto this version or beyond to run this project.
+
+SQlite Queries:
+
+    All of my sqlite queries are in the Controllers folder of the backend folder
 
 
 
