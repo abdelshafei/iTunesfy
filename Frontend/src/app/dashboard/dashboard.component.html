@@ -23,15 +23,14 @@
           <img src="../../assets/music-icon.png" class="musicImg"/>  
           <span class="songName">{{ result.name }}</span>
           <span class="duration"> {{ result.style | date:'mm:ss' }} </span>
-          <button *ngIf="userRole === 'listener'"></button>
         </div>
         <div *ngIf="result.type === 'playlist'" class="search-playlist" style="width: 70%;" [routerLink]="['/playlist', result.name, result.style]">
           <img src="../../assets/playlist-icon.png" class="playlistImg"/>
-          {{ result.name }}
+          <span class="playlistName"> {{ result.name }} </span>
         </div>
         <div *ngIf="result.type === 'album'" class="search-album" style="width: 70%;" [routerLink]="['/album', result.auth, result.name]">  
           <img src="../../assets/vinyl-record.png" class="albumImg"/>
-          {{ result.name }}
+          <span class="albumName"> {{ result.name }} </span>
         </div>
       </li>
     </ul>
@@ -46,6 +45,7 @@
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
   <h3 style="width: 50%; text-align: center;">Your Playlists</h3>
+  <button mat-raised-button>Create Playlist</button>
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <div id="playlists">

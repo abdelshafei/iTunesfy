@@ -29,3 +29,12 @@ exports.getSearchTerms = (req, res) => {
     res.status(200).json(rows);
   });
 };
+
+exports.getSongsForPlaylist = (req, res) => {
+  const {playlistName, userId, searchTerm} = req.params
+
+  const query = `
+  SELECT * FROM song 
+  WHERE 
+  `
+}

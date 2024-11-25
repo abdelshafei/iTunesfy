@@ -188,3 +188,22 @@ li {
     display: flex;
     justify-content: center; 
 }
+
+.playlistName {
+    flex-grow: 1; /* Takes up available space between the icon and duration */
+    font-size: 16px;
+}
+
+.albumName {
+    flex-grow: 1; /* Takes up available space between the icon and duration */
+    font-size: 16px;
+}
+
+.mat-mdc-raised-button {
+    background-color: rgb(230, 0, 255) !important;
+
+    .mdc-button__label {
+        color: white;
+    }
+    
+}
