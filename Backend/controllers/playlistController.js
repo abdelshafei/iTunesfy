@@ -2,12 +2,25 @@
 // router.get('/add-LikedPlaylist/:listenerId', authMiddleware, playlistController.addUserLikedPlaylists)
 const db = require('../config/db');
 
-// exports.createPlaylist = async (req, res) => {
-//     const {albumTitle} = req.body;
-//     const listenerId = req.params.listenername;
+exports.createPlaylist = async (req, res) => {
+  const {playlistName, UserId} = req.params;
 
-//     //create playlist
-// };
+  const query = `
+  INSERT OR IGNORE INTO Playlist(user_id, playlist_name, play_counter) VALUES (?, ?, ?)
+  `
+
+  console.log(req.params)
+
+  db.run(query, [Math.floor(UserId), playlistName, 0], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to add to playlist" });
+    }
+
+    res.status(200).json({ message: "Playlist created!" });
+
+  });
+};
 
 exports.getUserPlaylists = async (req, res) => {
   const listenername = req.params.listenername;

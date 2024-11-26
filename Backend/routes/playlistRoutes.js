@@ -3,10 +3,8 @@ const playlistController = require('../controllers/playlistController');
 const authMiddleware = require('../middleware/authMiddleware'); // Import auth middleware
 const router = express.Router();
 
-// Protected route to create a playlist - requires authentication
-// router.post('/create/:listenername', authMiddleware, playlistController.createPlaylist);
+router.get('/createPlaylist/:playlistName/:UserId', authMiddleware, playlistController.createPlaylist);
 
-// Protected route to get a user's playlists
 router.get('/ownPlaylist/:listenername', authMiddleware, playlistController.getUserPlaylists);
 
 router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists);
@@ -18,9 +16,5 @@ router.get('/incPlayCount/:playlistName/:UserId', authMiddleware, playlistContro
 router.get('/addSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.addSong);
 
 router.get('/removeSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.removeSong);
-
-// router.get('/remove-LikedPlaylist/:listenername', authMiddleware, playlistController.removeUserLikedPlaylists)
-
-// router.get('/add-LikedPlaylist/:listenername', authMiddleware, playlistController.addUserLikedPlaylists)
 
 module.exports = router;

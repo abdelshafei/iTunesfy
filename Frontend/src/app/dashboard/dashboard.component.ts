@@ -11,8 +11,9 @@ import { SearchService } from '../services/search.service';
 })
 export class DashboardComponent implements OnInit {
   showCreatePlaylist: boolean = false;
+  playlistName: string | null = null
   userRole: string | null = localStorage.getItem('userRole');
-  userId: string | null = localStorage.getItem('userId'); // Assuming user ID is stored
+  userId: string | null = localStorage.getItem('UserId');
   authId: string | null = localStorage.getItem('AuthId') 
   playlists: any[] = [];
   likedPlaylists: any[] = [];
@@ -59,6 +60,16 @@ export class DashboardComponent implements OnInit {
     if (this.userRole === 'artist') {
       this.artistService.getAlbums().subscribe(data => {
         this.albums = data;
+      });
+    }
+  }
+
+  createPlaylist(): void {
+    if (this.playlistName) {
+      this.listenerService.createPlaylist(this.playlistName!, this.userId!).subscribe({
+        error: (err) => {
+          console.error('Playlist Creation went wrong!: ', err);
+        }
       });
     }
   }

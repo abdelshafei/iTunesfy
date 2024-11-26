@@ -74,4 +74,17 @@ export class ListenerService {
 
     return this.http.get<any[]>(`${this.apiUrl}/playlists/removeSong/${songId}/${playlistName}/${userId}`, { headers });
   }
+
+  createPlaylist(playlistName: string, UserId: string) : Observable<any[]> {
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/createPlaylist/${playlistName}/${UserId}`, { headers });
+  }
 }

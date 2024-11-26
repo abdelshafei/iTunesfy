@@ -35,7 +35,7 @@ CREATE TABLE IF NOT EXISTS Album (
 );
 
 CREATE TABLE IF NOT EXISTS PlayList (
-    user_id INTEGER UNIQUE NOT NULL,
+    user_id INTEGER NOT NULL,
     playlist_name TEXT NOT NULL,
     play_counter INTEGER NOT NULL,
     PRIMARY KEY(user_id, playlist_name)
@@ -43,10 +43,10 @@ CREATE TABLE IF NOT EXISTS PlayList (
 );
 
 CREATE TABLE IF NOT EXISTS Playlist_Song (
-    song_id INTEGER UNIQUE NOT NULL,
+    song_id INTEGER NOT NULL,
     user_id INTEGER NOT NULL,
     playlist_name TEXT NOT NULL,
-    PRIMARY KEY(playList_name, user_id),
+    PRIMARY KEY(playList_name, user_id, song_id),
     FOREIGN KEY (song_id) REFERENCES Song(song_id),
     FOREIGN KEY (user_id, playList_name) REFERENCES PlayList(user_id, playlist_name)
 );

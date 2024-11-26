@@ -49,6 +49,18 @@
     <mat-icon matSuffix>{{ showCreatePlaylist ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon> 
     Create Playlist
   </button>
+  <!-- expandable div to create playlist -->
+  <div *ngIf="showCreatePlaylist" style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+    <h3>Create a New Playlist</h3>
+    <form (ngSubmit)="createPlaylist()">
+      <mat-form-field appearance="outline" style="width: 100%;">
+        <mat-label>Playlist Name</mat-label>
+        <input matInput [(ngModel)]="playlistName" name="playlistName" required />
+      </mat-form-field>
+      <button mat-raised-button color="accent" type="submit" style="margin-top: 10px;">Create</button>
+    </form>
+  </div>
+  <!-- --------------------------------- -->
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <div id="playlists">
