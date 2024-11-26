@@ -101,5 +101,4 @@ export class ListenerService {
     return this.http.get<any[]>(`${this.apiUrl}/playlists/removePlaylist/${playlistName}/${UserId}`, { headers });
   }
 
-  //'/removePlaylist/:playlistName/:UserId'
 }
