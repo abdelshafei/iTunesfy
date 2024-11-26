@@ -5,6 +5,8 @@ const router = express.Router();
 
 router.get('/createPlaylist/:playlistName/:UserId', authMiddleware, playlistController.createPlaylist);
 
+router.get('/removePlaylist/:playlistName/:UserId', authMiddleware, playlistController.removePlaylist)
+
 router.get('/ownPlaylist/:listenername', authMiddleware, playlistController.getUserPlaylists);
 
 router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists);

@@ -82,6 +82,7 @@ export class PlaylistDetailComponent {
     this.listenerService.addSongs(songId, this.playlistName!, this.userId!).subscribe({
       next: (data) => {
         this.loadSongs();
+        this.searchSongs()
       },
       error: (err) => {
         console.error('Song Adding Failed:', err);
@@ -93,6 +94,7 @@ export class PlaylistDetailComponent {
     this.listenerService.removeSongs(songId, this.playlistName!, this.userId!).subscribe({
       next: (data) => {
         this.loadSongs();
+        this.searchSongs();
       },
       error: (err) => {
         console.error('Song Adding Failed:', err);

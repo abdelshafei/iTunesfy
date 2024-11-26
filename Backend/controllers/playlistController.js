@@ -9,15 +9,44 @@ exports.createPlaylist = async (req, res) => {
   INSERT OR IGNORE INTO Playlist(user_id, playlist_name, play_counter) VALUES (?, ?, ?)
   `
 
-  console.log(req.params)
-
   db.run(query, [Math.floor(UserId), playlistName, 0], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to add to playlist" });
+      return res.status(500).json({ message: "Failed to add playlist" });
     }
 
     res.status(200).json({ message: "Playlist created!" });
+
+  });
+};
+
+exports.removePlaylist = async (req, res) => {
+  const {playlistName, UserId} = req.params;
+
+  const query1 = `
+  DELETE FROM Playlist
+  WHERE user_id = ? AND playlist_name = ?
+  `
+
+  const query2 = `
+  DELETE FROM Playlist_Song
+  WHERE user_id = ? AND playlist_name = ?
+  `
+
+  db.run(query1, [Math.floor(UserId), playlistName], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to remove playlist" });
+    }
+
+    db.run(query2, [Math.floor(UserId), playlistName], (err) => {
+      if (err) {
+        console.error("Database error:", err.message);
+        return res.status(500).json({ message: "Failed to remove playlist" });
+      }
+
+      res.status(200).json({ message: "Playlist removed." });
+    });
 
   });
 };
