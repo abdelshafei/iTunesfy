@@ -208,6 +208,7 @@ li {
     
 }
 
-.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
-    color: #555;
+.playlistName {
+    flex-grow: 1; /* Takes up available space between the icon and duration */
+    font-size: 16px;
 }

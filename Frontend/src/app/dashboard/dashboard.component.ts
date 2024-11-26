@@ -65,12 +65,21 @@ export class DashboardComponent implements OnInit {
   }
 
   createPlaylist(): void {
-    if (this.playlistName) {
+    if (this.playlistName?.trim()) {
       this.listenerService.createPlaylist(this.playlistName!, this.userId!).subscribe({
+        next: () => {
+          this.loadListenerData();
+        },
         error: (err) => {
           console.error('Playlist Creation went wrong!: ', err);
         }
       });
     }
+
+    this.playlistName = null
+  }
+
+  test() : void {
+    console.log("click me!")
   }
 }

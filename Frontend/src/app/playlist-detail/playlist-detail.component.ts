@@ -68,7 +68,6 @@ export class PlaylistDetailComponent {
       this.searchService.searchSongs(this.playlistName!, this.userId!, this.searchTerm).subscribe({
         next: (data) => {
           this.searchResults = data;
-          console.log(data)
         },
         error: (err) => {
           console.error('Search failed:', err);

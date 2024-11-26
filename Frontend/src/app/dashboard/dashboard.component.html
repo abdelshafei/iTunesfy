@@ -66,9 +66,10 @@
   <div id="playlists">
     <ul>
       <li *ngFor="let playlist of playlists">
-        <div class="search-playlist" style="width: 200%;" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">
-          <img src="../../assets/playlist-icon.png" class="playlistImg"/>
-          {{ playlist.playlist_name }}
+        <div class="search-playlist" style="width: 200%;">
+          <img src="../../assets/playlist-icon.png" class="playlistImg" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]"/>
+          <span class="playlistName" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">{{ playlist.playlist_name }}</span>
+          <mat-icon matSuffix (click)="test()">{{ 'delete' }}</mat-icon>
         </div>
       </li>
     </ul>
