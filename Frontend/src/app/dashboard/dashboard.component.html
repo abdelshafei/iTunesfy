@@ -72,7 +72,7 @@
   <div id="albums">
     <ul>
       <li *ngFor="let album of albums">        
-        <div class="search-album" style="width: 200%;" [routerLink]="['/playlist', album.album_id, album.album_title]">  
+        <div class="search-album" style="width: 200%;" [routerLink]="['/album', album.album_id, album.album_title]">  
         <img src="../../assets/vinyl-record.png" class="albumImg"/>
         {{ album.album_title }}
         </div>

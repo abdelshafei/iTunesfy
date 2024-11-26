@@ -35,6 +35,7 @@ export class LoginComponent {
         // if artist store authID in localStorage
         if(localStorage.getItem("userRole") === 'artist') {
           localStorage.setItem("AuthId", this.authentication_id);
+          localStorage.setItem('UserId', '');
         } else {
           localStorage.removeItem('AuthId');
           localStorage.setItem('UserId', res.userId);
