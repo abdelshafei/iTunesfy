@@ -38,7 +38,6 @@ export class PlaylistDetailComponent {
     this.listenerService.getSongsByPlaylist(this.playlistName!, this.userId!).subscribe(
       (data) => {
         this.songs = data;
-        console.log(data)
       },
       (err) => {
         console.error('Failed to load songs:', err);

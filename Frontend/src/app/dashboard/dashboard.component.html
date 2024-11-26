@@ -69,7 +69,7 @@
         <div class="search-playlist" style="width: 200%;">
           <img src="../../assets/playlist-icon.png" class="playlistImg" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]"/>
           <span class="playlistName" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">{{ playlist.playlist_name }}</span>
-          <mat-icon matSuffix (click)="test()">{{ 'delete' }}</mat-icon>
+          <mat-icon matSuffix (click)="removePlaylist(playlist.playlist_name, playlist.user_id)">{{ 'delete' }}</mat-icon>
         </div>
       </li>
     </ul>

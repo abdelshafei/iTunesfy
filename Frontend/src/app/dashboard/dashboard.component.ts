@@ -79,7 +79,14 @@ export class DashboardComponent implements OnInit {
     this.playlistName = null
   }
 
-  test() : void {
-    console.log("click me!")
+  removePlaylist(playlistName: string, UserId: string) : void {
+    this.listenerService.removePlaylist(playlistName, UserId).subscribe({
+      next: () => {
+        this.loadListenerData();
+      },
+      error: (err) => {
+        console.error('Playlist deletion went wrong!: ', err);
+      }
+    });
   }
 }
