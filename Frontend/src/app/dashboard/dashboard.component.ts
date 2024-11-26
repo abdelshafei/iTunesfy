@@ -10,6 +10,7 @@ import { SearchService } from '../services/search.service';
   styleUrls: ['./dashboard.component.css']
 })
 export class DashboardComponent implements OnInit {
+  showCreatePlaylist: boolean = false;
   userRole: string | null = localStorage.getItem('userRole');
   userId: string | null = localStorage.getItem('userId'); // Assuming user ID is stored
   authId: string | null = localStorage.getItem('AuthId') 

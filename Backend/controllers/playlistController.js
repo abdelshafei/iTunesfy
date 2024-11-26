@@ -53,16 +53,16 @@ exports.getUserLikedPlaylists = async(req, res) => {
 };
 
 exports.getPlaylistSongs = async(req, res) => {
-  const { PlaylistName, userId } = req.params;
+  const { playlistName, UserId } = req.params;
 
   const query = `
     SELECT s.*
-    FROM Playlist_Song ps
-    INNER JOIN Song s ON ps.song_id = s.song_id
+    FROM Song s
+    INNER JOIN Playlist_Song ps ON s.song_id = ps.song_id
     WHERE ps.user_id = ? AND ps.playlist_name = ?
   `;
 
-  db.all(query, [userId], [PlaylistName], (err, rows) => {
+  db.all(query, [Math.floor(UserId), playlistName], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
       return res.status(500).json({ message: "Failed to retrieve playlist" });
@@ -75,11 +75,6 @@ exports.getPlaylistSongs = async(req, res) => {
 
 exports.incPlaylistPlayCount = async(req, res) => {
   const { playlistName, UserId } = req.params;
-
-  console.log(req.params)
-
-  console.log("User ID:", UserId);
-  console.log("Playlist Name:", playlistName);
 
   const query = `
   UPDATE Playlist SET play_counter = play_counter + 1 
@@ -98,6 +93,50 @@ exports.incPlaylistPlayCount = async(req, res) => {
     }
 
 
-    res.status(200).json({ message: "play counter updated"});
+    res.status(200).json({message: "play counter updated"});
   });
 }
+
+exports.addSong = (req, res) => {
+  const {songId, playlistName, UserId} = req.params
+
+  const query = `INSERT OR IGNORE INTO Playlist_Song(song_id, user_id, playlist_name) VALUES (?, ?, ?)`
+
+  db.run(query, [songId, Math.floor(UserId), playlistName], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to add to playlist" });
+    }
+
+    if (this.change == 0) {
+      return res.status(400).json({ message: "playlist has not been updated!" });
+    }
+
+    res.status(200).json({ message: "Playlist updated!" });
+
+  });
+
+};
+
+exports.removeSong = (req, res) => {
+  const {songId, playlistName, UserId} = req.params
+
+  const query = `
+  DELETE FROM Playlist_Song 
+  WHERE song_id = ? AND playlist_name = ? AND user_id = ?
+  `
+
+  db.run(query, [Math.floor(songId), playlistName, Math.floor(UserId)], (err) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to remove from playlist" });
+    }
+
+    if (this.change == 0) {
+      return res.status(400).json({ message: "playlist has not been updated!" });
+    }
+
+    res.status(200).json({ message: "Playlist updated!" });
+
+  });
+};

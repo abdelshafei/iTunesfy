@@ -124,7 +124,9 @@ exports.login = (req, res) => {
                 { expiresIn: '9h' }
             );
 
-            res.json({ token, message: 'Login successful' });
+            const userId = user.user_id
+
+            res.json({ userId, token, message: 'Login successful' });
         });
     } else {
         db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {

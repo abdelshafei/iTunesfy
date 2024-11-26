@@ -31,17 +31,17 @@ exports.getSearchTerms = (req, res) => {
 };
 
 exports.getSongsForPlaylist = (req, res) => {
-  const {playlistName, userId, searchTerm} = req.params
+  const {playlistName, userId} = req.params
+  const searchTerm = `%${req.params.searchTerm}%`;
 
   const query = `
-    SELECT s.*
-    FROM song s
-    WHERE s.song_id NOT IN (
-      SELECT ps.song_id
-      FROM playlist_song ps
-      WHERE ps.playlist_name = ? 
-      AND ps.user_id = ?
-    )
+  SELECT s.*
+  FROM Song s
+  LEFT JOIN Playlist_Song ps
+    ON s.song_id = ps.song_id
+    AND ps.playlist_name = ?
+    AND ps.user_id = ?
+  WHERE ps.song_id IS NULL
     AND s.song_title LIKE ?
   `
 

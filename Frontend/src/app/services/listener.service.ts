@@ -33,7 +33,7 @@ export class ListenerService {
       Authorization: `Bearer ${token}`, // Format: Bearer <token>
     };
 
-    return this.http.get<any[]>(`${this.apiUrl}/playlists/${playlistName}/${userId}}`, { headers });
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/${playlistName}/${userId}`, { headers });
   }
 
   incrementPlayCount(playlistName: string, userId: string) : Observable<any[]> {
@@ -45,10 +45,33 @@ export class ListenerService {
     const headers = {
       Authorization: `Bearer ${token}`, // Format: Bearer <token>
     };
-
-    console.log("Playlist name: ", playlistName);
-    console.log("User's Id: ", userId);
     
     return this.http.get<any[]>(`${this.apiUrl}/playlists/incPlayCount/${playlistName}/${userId}`, { headers });
+  }
+
+  addSongs(songId: string, playlistName: string, userId: string) : Observable<any[]> {
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/addSong/${songId}/${playlistName}/${userId}`, { headers });
+  }
+
+  removeSongs(songId: string, playlistName: string, userId: string) : Observable<any[]> {
+    const token = localStorage.getItem('authToken'); // Get the token from storage
+    if (!token) {
+      console.error("Auth token is missing in localStorage.");
+    }
+  
+    const headers = {
+      Authorization: `Bearer ${token}`, // Format: Bearer <token>
+    };
+
+    return this.http.get<any[]>(`${this.apiUrl}/playlists/removeSong/${songId}/${playlistName}/${userId}`, { headers });
   }
 }

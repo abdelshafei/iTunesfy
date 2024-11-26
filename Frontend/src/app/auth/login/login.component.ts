@@ -37,6 +37,7 @@ export class LoginComponent {
           localStorage.setItem("AuthId", this.authentication_id);
         } else {
           localStorage.removeItem('AuthId');
+          localStorage.setItem('UserId', res.userId);
         }
         this.router.navigate(['/dashboard']); // Redirect to dashboard after login
       },

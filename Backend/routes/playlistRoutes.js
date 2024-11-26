@@ -13,7 +13,11 @@ router.get('/liked-playlists/:listenername', authMiddleware, playlistController.
 
 router.get('/:playlistName/:UserId', authMiddleware, playlistController.getPlaylistSongs);
 
-router.get('/incPlayCount/:playlistName/:UserId', authMiddleware, playlistController.incPlaylistPlayCount)
+router.get('/incPlayCount/:playlistName/:UserId', authMiddleware, playlistController.incPlaylistPlayCount);
+
+router.get('/addSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.addSong);
+
+router.get('/removeSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.removeSong);
 
 // router.get('/remove-LikedPlaylist/:listenername', authMiddleware, playlistController.removeUserLikedPlaylists)
 

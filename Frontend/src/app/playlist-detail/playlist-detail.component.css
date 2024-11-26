@@ -45,6 +45,25 @@ li {
     margin-right: 10px;
 }
 
+.search-song {
+    display: flex; 
+    align-items: center; 
+    padding: 10px; 
+    border: 1px solid #ccc; 
+    border-radius: 5px; 
+    margin: 5px 0; 
+}
+
+.search-song:hover {
+    border: solid rgb(92, 92, 92);
+    size-adjust: 5px;
+    cursor: pointer
+}
+
+.search-song:active {
+    border: solid 2px rgb(13, 13, 13);
+}
+
 .songName {
     flex-grow: 1; /* Takes up available space between the icon and duration */
     font-size: 16px;
@@ -55,4 +74,14 @@ li {
     font-size: 14px;
     color: #555; /* Optional: gray text */
     flex-grow: 1;
+}
+
+.addedSongsBlock {
+    height: 300px;
+    overflow-y: auto;
+}
+
+.searchBlock {
+    height: 300px;
+    overflow-y: auto;
 }

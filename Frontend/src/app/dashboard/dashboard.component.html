@@ -45,7 +45,10 @@
 <!-- Show listener's playlists, liked playlists, and recommended songs -->
 <div *ngIf="userRole === 'listener'">
   <h3 style="width: 50%; text-align: center;">Your Playlists</h3>
-  <button mat-raised-button>Create Playlist</button>
+  <button mat-raised-button (click)="showCreatePlaylist = !showCreatePlaylist">
+    <mat-icon matSuffix>{{ showCreatePlaylist ? 'keyboard_arrow_up' : 'keyboard_arrow_down' }}</mat-icon> 
+    Create Playlist
+  </button>
   <hr id="small-line">
   <div *ngIf="playlists.length === 0">You have no playlists.</div>
   <div id="playlists">
