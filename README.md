@@ -22,7 +22,7 @@ SQlite Queries:
 
     All of my sqlite queries are in the Controllers folder of the backend folder
 
-Video Demonstaration:
+Video Demonstration:
 
     ---------TODO---------
 

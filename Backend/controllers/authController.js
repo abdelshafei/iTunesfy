@@ -10,12 +10,17 @@ exports.register = async (req, res) => {
   if (userType === 'artist') {
     const { style, authentication_id } = req.body;
 
+    console.log(style, authentication_id)
+
     // Step 1: Validate the authentication_id from the `auth_ids` table
     db.get(
-      `SELECT * FROM auth_ids WHERE authentication_id = ?`,
+      `SELECT * FROM auth_ids WHERE Auth_id = ?`,
       [authentication_id],
       (err, validAuthId) => {
-        if (err) return res.status(500).json({ message: 'Error validating authentication ID' });
+        if (err) {
+          console.log("Database error: ", err )
+          return res.status(500).json({ message: 'Error validating authentication ID' });
+        }
 
         // If the authentication_id is not found in `auth_ids`, it's invalid
         if (!validAuthId)
