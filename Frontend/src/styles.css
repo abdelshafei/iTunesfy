@@ -2,3 +2,31 @@
 
 html, body { height: 100%; }
 body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+/* Overrides */
+
+/* Mat Form Field  */
+.mat-mdc-form-field {
+    /* background-color: yellow; */
+    margin-bottom: 20px;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label, .mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-floating-label--float-above {
+    color: gray !important;
+}
+
+.mdc-text-field--outlined:not(.mdc-text-field--disabled) .mdc-text-field__input {
+    color: black !important;
+}
+
+.mat-mdc-text-field-wrapper.mdc-text-field--outlined .mat-mdc-form-field-infix {
+    padding: 0px !important;
+    position: relative !important;
+    justify-content: center !important; /* Horizontally center */
+    align-items: center !important; 
+}
+
+input[_ngcontent-ng-c3978324614] {
+    margin-bottom: 0px !important;
+    width: 100% !important;
+}

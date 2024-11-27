@@ -1,5 +1,6 @@
 form {
     max-width: 400px; /* Set a max width for the form */ 
+    /* background-color: red; */
 }
   
 .form-group {
@@ -7,6 +8,7 @@ form {
     align-items: center;
     margin-bottom: 10px; /* Add spacing between fields */
 }
+
 
 label {
     flex: 1; /* Make the label take up one part of the row */
@@ -46,10 +48,6 @@ form {
 .form-container {
     display: flex;
     flex-direction: column;
-
-    .mdc-text-field {
-        background-color: blue !important;
-    }
 }
   
 .form-container > * {
@@ -66,8 +64,12 @@ form {
 .mat-mdc-raised-button {
     background-color: rgb(0, 115, 255) !important;
 
-    .mdc-button__label {
+    /* .mdc-button__label {
         color: white;
-    }
+    } */
     
+}
+
+.mdc-text-field {
+    /* background-color: rgb(255, 255, 255) !important; */
 }
