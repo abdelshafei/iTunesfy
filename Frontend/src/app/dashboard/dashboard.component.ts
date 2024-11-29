@@ -89,4 +89,29 @@ export class DashboardComponent implements OnInit {
       }
     });
   }
+
+  isOwnedPlaylist(Playlist: any): boolean {
+    return this.playlists.some(
+      playlist => (playlist.playlist_name === Playlist.name && playlist.user_id === Playlist.auth)
+    );
+  }
+
+  isPlaylistLiked(playlistName: string, UserId: string): boolean {
+    return this.likedPlaylists.some(
+      playlist => playlist.playlist_name === playlistName && playlist.likedUser_id === this.userId && playlist.user_id === UserId
+    );
+  }
+
+  toggleLike(playlistName: string, user: string): void {
+    // const userId = this.getUserId();
+    // this.listenerService.toggleLike(userId, playlistName).subscribe({
+    //   next: () => {
+    //     if (this.isPlaylistLiked(playlistName)) {
+    //       this.likedPlaylists = this.likedPlaylists.filter(p => p !== playlistName && p !== user);
+    //     } else {
+    //       this.likedPlaylists.push(playlistName);
+    //     }
+    //   }
+    // });
+  }
 }

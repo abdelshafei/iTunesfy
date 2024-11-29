@@ -24,10 +24,21 @@
           <span class="songName">{{ result.name }}</span>
           <span class="duration"> {{ result.style | date:'mm:ss' }} </span>
         </div>
-        <div *ngIf="result.type === 'playlist'" class="search-playlist" style="width: 70%;" [routerLink]="['/playlist', result.name, result.style]">
+        <!-- playlists for artists or listeners that own the playlist -->
+        <div *ngIf="result.type === 'playlist' && (userRole === 'artist' || (userRole === 'listener' && isOwnedPlaylist(result)))" class="search-playlist" style="width: 70%;" [routerLink]="['/playlist', result.name, result.style]">
           <img src="../../assets/playlist-icon.png" class="playlistImg"/>
           <span class="playlistName"> {{ result.name }} </span>
         </div>
+        <!-- --------------------- -->
+        <!-- playlists for listeners whom do not own the playlist-->
+        <div *ngIf="result.type === 'playlist' && userRole === 'listener' && !isOwnedPlaylist(result)" class="search-playlist" style="width: 70%;">
+          <img src="../../assets/playlist-icon.png" class="playlistImg" [routerLink]="['/playlist', result.name, result.style]"/>
+          <span class="playlistName" [routerLink]="['/playlist', result.name, result.style]"> {{ result.name }} </span>
+          <mat-icon matSuffix [style.color]="isPlaylistLiked(result.name, result.auth) ? 'red' : 'black'" (click)="toggleLike(result.name, result.auth)">
+            {{ 'favorite' }}
+          </mat-icon> 
+        </div>
+        <!-- ----------------------- -->
         <div *ngIf="result.type === 'album'" class="search-album" style="width: 70%;" [routerLink]="['/album', result.auth, result.name]">  
           <img src="../../assets/vinyl-record.png" class="albumImg"/>
           <span class="albumName"> {{ result.name }} </span>
@@ -42,7 +53,7 @@
   </div>
 </div>
 <hr id="search-line">
-<!-- Show listener's playlists, liked playlists, and recommended songs -->
+<!-- Show listener's playlists, liked playlists -->
 <div *ngIf="userRole === 'listener'">
   <h3 style="width: 50%; text-align: center;">Your Playlists</h3>
   <button mat-raised-button (click)="showCreatePlaylist = !showCreatePlaylist">
@@ -70,6 +81,19 @@
           <img src="../../assets/playlist-icon.png" class="playlistImg" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]"/>
           <span class="playlistName" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">{{ playlist.playlist_name }}</span>
           <mat-icon matSuffix (click)="removePlaylist(playlist.playlist_name, playlist.user_id)">{{ 'delete' }}</mat-icon>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <hr id="small-line">
+  <div *ngIf="likedPlaylists.length === 0">You have no liked playlists.</div>
+  <div id="playlists">
+    <ul>
+      <li *ngFor="let playlist of likedPlaylists">
+        <div class="search-playlist" style="width: 200%;">
+          <img src="../../assets/playlist-icon.png" class="playlistImg" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]"/>
+          <span class="playlistName" [routerLink]="['/playlist', playlist.playlist_name, playlist.user_id]">{{ playlist.playlist_name }}</span>
+          <mat-icon matSuffix [style.color]="isPlaylistLiked(playlist.playlist_name, playlist.user_id) ? 'red' : 'black'" (click)="toggleLike(playlist.playlist_name, playlist.user_id)">{{ 'favorite' }}</mat-icon>
         </div>
       </li>
     </ul>
