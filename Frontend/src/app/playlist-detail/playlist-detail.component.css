@@ -85,3 +85,12 @@ li {
     height: 300px;
     overflow-y: auto;
 }
+
+.heading {
+    flex-grow: 0;
+    white-space: nowrap;
+}
+
+/* .play-pause-btn {
+
+} */

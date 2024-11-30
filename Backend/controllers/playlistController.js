@@ -210,7 +210,6 @@ exports.addLikedPlaylist = (req, res) => {
   });
 
 
-
 }
 
 exports.removeLikedPlaylist = (req, res) => {
@@ -224,7 +223,9 @@ exports.removeLikedPlaylist = (req, res) => {
 
   const updateLikedIdsQuery = `
   UPDATE Playlist_Like SET Liked_id = Liked_id - 1 
-  WHERE user_id = ? AND playlist_name = ? AND Liked_id > ?
+  WHERE user_id = ?
+    AND playlist_name = ? 
+    AND Liked_id > ?
   `
 
   const DeleteQuery = `
@@ -232,21 +233,22 @@ exports.removeLikedPlaylist = (req, res) => {
     WHERE user_id = ? AND playlist_name = ? AND userLiked_id = ? 
   `
 
-  db.get(currLikedIdQuery, [UserId, playlistName, LikedUserId], (err, row) => {
+  db.get(currLikedIdQuery, [Math.floor(UserId), playlistName, Math.floor(LikedUserId)], (err, row) => {
     if(err) {
       console.error(err);
       res.status(400).json({Message: err})
     }
 
-    const currLikedId = row
+    const currLikedId = row.Liked_id
+    console.log(currLikedId)
 
-    db.run(DeleteQuery, [UserId, playlistName, LikedUserId], (err) => {
+    db.run(DeleteQuery, [Math.floor(UserId), playlistName, Math.floor(LikedUserId)], (err) => {
       if(err) {
         console.error(err);
         res.status(400).json({Message: err})
       }
 
-      db.run(updateLikedIdsQuery, [UserId, playlistName, currLikedId], (err) => {
+      db.run(updateLikedIdsQuery, [Math.floor(UserId), playlistName, Math.floor(currLikedId)], (err) => {
         if(err) {
           console.error(err);
           res.status(400).json({Message: err})
