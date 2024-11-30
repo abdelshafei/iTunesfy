@@ -22,8 +22,8 @@ export class AuthService {
 
   // Logout method
   logout() {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    localStorage.clear();
+    this.router.navigate(['']);
   }
 
   // Check if user is authenticated

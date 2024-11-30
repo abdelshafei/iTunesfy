@@ -5,6 +5,9 @@ Web-baseed interactive database inspired by streaming-services such as iTunes, s
 Student Name: Abdelrahman ElShafay
 Student #: 101279725
 
+I attest that I am the sole author of this summitted work and any code borrowed from other sources has been identified by comments placed in my submitted code.
+Abdelrahman ElShafay, 101279725
+
 Sqlite Database:
     Name:- ITunesify.db
     Path:- ITunesfy/Backend/ITunesify.db
@@ -25,6 +28,7 @@ SQlite Queries:
 Video Demonstration:
 
     https://youtu.be/zkZztQ0sfmA
+    TODO: NEW video for new implementations
 
 
 

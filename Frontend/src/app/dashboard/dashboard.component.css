@@ -195,7 +195,7 @@ li {
 }
 
 .albumName {
-    flex-grow: 1; /* Takes up available space between the icon and duration */
+    flex-grow: 1; 
     font-size: 16px;
 }
 
@@ -209,6 +209,43 @@ li {
 }
 
 .playlistName {
-    flex-grow: 1; /* Takes up available space between the icon and duration */
+    flex-grow: 1; 
     font-size: 16px;
+}
+
+#header-container {
+    display: flex;              
+    align-items: center;       
+    justify-content: space-between; 
+    padding: 0 10px;           
+}
+  
+#header-container h2 {
+    flex-grow: 1;                 
+    font-size: 24px;
+    text-align: center;
+}
+
+#LogOut-linker {
+    display: flex;             
+    align-items: center;        
+    position: relative;         
+}
+
+.Logout-icon {
+    transform: scale(0.7);      
+}
+
+.animated-icon {
+    position: absolute;
+    top: 0;
+    left: 0;
+    opacity: 0;
+    transition: opacity 0.3s ease, transform 0.3s ease;
+    transform: scale(0.7);
+}
+
+#LogOut-linker:hover .animated-icon {
+    opacity: 1;
+    cursor: pointer;
 }

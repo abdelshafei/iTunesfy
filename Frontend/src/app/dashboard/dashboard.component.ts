@@ -3,6 +3,7 @@ import { Component, OnInit } from '@angular/core';
 import { ListenerService } from '../services/listener.service';
 import { ArtistService } from '../services/artist.service';
 import { SearchService } from '../services/search.service';
+import { AuthService } from '../auth/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -22,13 +23,12 @@ export class DashboardComponent implements OnInit {
   searchTerm: string = '';
   searchResults: any[] = [];
 
-  constructor(private listenerService: ListenerService, private artistService: ArtistService, private searchService: SearchService) {}
+  constructor(private listenerService: ListenerService, private artistService: ArtistService, private searchService: SearchService, private authService: AuthService) {}
 
   ngOnInit(): void {
     this.search();
     if (this.userRole === 'listener') {
       this.loadListenerData();
-      console.log(this.likedPlaylists)
     } else if (this.userRole === 'artist') {
       this.loadArtistData();
     }
@@ -134,5 +134,9 @@ export class DashboardComponent implements OnInit {
         }
       })
     }
+  }
+
+  logout(): void {
+    this.authService.logout();
   }
 }
