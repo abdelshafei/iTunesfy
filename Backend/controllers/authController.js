@@ -8,6 +8,7 @@ exports.register = async (req, res) => {
 
   // Insert user into appropriate table based on userType
   if (userType === 'artist') {
+
     const { style, authentication_id } = req.body;
 
     console.log(style, authentication_id)
@@ -62,7 +63,7 @@ exports.register = async (req, res) => {
   } else {
   // Default to listener registration
 
-  console.log(req.body);
+    console.log(req.body);
     db.run(
       `INSERT OR IGNORE INTO Listeners (userName, email, password, country) VALUES (?, ?, ?, ?)`,
       [userName, email, password, country],
@@ -74,6 +75,7 @@ exports.register = async (req, res) => {
         if (this.change == 0) {
           return res.status(400).json({ message: "User Name already in use!" });
         }
+        
 
         // Retrieve the inserted user's ID to insert a default playlist
         db.get(

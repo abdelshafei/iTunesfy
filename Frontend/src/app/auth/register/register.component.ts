@@ -29,6 +29,10 @@ export class RegisterComponent {
       authentication_id: this.userRole === 'artist' ? this.authentication_id : null
     };
 
+    if(this.userName == null || this.email == null || this.password == null || this.country == null || (this.authentication_id == null && this.userRole == 'artist')) {
+      alert('Registration failed');
+    }
+
     this.authService.register(registerData).subscribe({
       next: (res: any) => {
         alert(res.message);

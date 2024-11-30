@@ -51,15 +51,15 @@ CREATE TABLE IF NOT EXISTS Playlist_Song (
     FOREIGN KEY (user_id, playList_name) REFERENCES PlayList(user_id, playlist_name)
 );
 
-CREATE TABLE IF NOT EXISTS Playlist_Like {
+CREATE TABLE IF NOT EXISTS Playlist_Like (
     user_id INTEGER NOT NULL,
     playlist_name TEXT NOT NULL,
-    Liked_id INTEGER UNIQUE NOT NULL,
+    Liked_id INTEGER NOT NULL,
     userLiked_id INTEGER NOT NULL,
     PRIMARY KEY (user_id, playList_name, userLiked_id),
     FOREIGN KEY (user_id, playList_name) REFERENCES Playlist(user_id, playList_name),
     FOREIGN KEY (userLiked_id) REFERENCES Listener(user_id)
-};
+);
 
 
 CREATE TABLE IF NOT EXISTS Auth_ids (

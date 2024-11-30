@@ -74,23 +74,20 @@ exports.getUserPlaylists = async (req, res) => {
 };
 
 exports.getUserLikedPlaylists = async(req, res) => {
-  const listenername = req.params.username;
+  const userId = req.params.UserId;
 
-  // Query to retrieve albums by artist ID
   const query = `
-  SELECT PlayList.* 
-  FROM Listeners 
-  JOIN PlayListLikes_Listeners ON Listeners.user_id = PlayListLikes_Listeners.user_id
-  JOIN PlayList ON PlayListLikes_Listeners.playlist_name = PlayList.playlist_name
-  WHERE Listeners.userName = ?
+  SELECT playlist_name, user_id 
+  FROM Playlist_Like 
+  WHERE userLiked_id = ?
   `;
-  db.all(query, [listenername], (err, rows) => {
+  db.all(query, userId, (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to retrieve playlist" });
+      return res.status(500).json({ message: "Failed to retrieve Liked playlist" });
     }
 
-    res.status(200).json(rows); // Send back the retrieved albums
+    res.status(200).json(rows);
   });
 };
 
@@ -182,3 +179,81 @@ exports.removeSong = (req, res) => {
 
   });
 };
+
+exports.addLikedPlaylist = (req, res) => {
+  const {playlistName, UserId, LikedUserId} = req.params
+
+  const nextLikedIdQuery = `
+    SELECT COUNT(Liked_id) + 1 AS nextLikedId
+    FROM Playlist_Like
+    WHERE user_id = ? AND playlist_name = ?
+  `
+
+  const insertQuery = `INSERT OR IGNORE INTO Playlist_Like(user_id, playlist_name, Liked_id, userLiked_id) VALUES (?, ?, ?, ?)`
+
+  db.get(nextLikedIdQuery, [UserId, playlistName], (err, row) => {
+    if(err) {
+      console.error(err);
+      res.status(400).json({Message: err})
+    }
+
+    const nextLikedId = row.nextLikedId;
+
+    db.run(insertQuery, [UserId, playlistName, nextLikedId, LikedUserId], (err) => {
+      if(err) {
+        console.error(err);
+        res.status(400).json({Message: err})
+      }
+
+      res.status(200).json({Message: "Playlist like added!"});
+    });
+  });
+
+
+
+}
+
+exports.removeLikedPlaylist = (req, res) => {
+  const {playlistName, UserId, LikedUserId} = req.params
+
+  const currLikedIdQuery = `
+  SELECT Liked_id 
+  FROM Playlist_Like
+  WHERE user_id = ? AND playlist_name = ? AND userLiked_id = ?
+  `
+
+  const updateLikedIdsQuery = `
+  UPDATE Playlist_Like SET Liked_id = Liked_id - 1 
+  WHERE user_id = ? AND playlist_name = ? AND Liked_id > ?
+  `
+
+  const DeleteQuery = `
+    DELETE FROM Playlist_Like 
+    WHERE user_id = ? AND playlist_name = ? AND userLiked_id = ? 
+  `
+
+  db.get(currLikedIdQuery, [UserId, playlistName, LikedUserId], (err, row) => {
+    if(err) {
+      console.error(err);
+      res.status(400).json({Message: err})
+    }
+
+    const currLikedId = row
+
+    db.run(DeleteQuery, [UserId, playlistName, LikedUserId], (err) => {
+      if(err) {
+        console.error(err);
+        res.status(400).json({Message: err})
+      }
+
+      db.run(updateLikedIdsQuery, [UserId, playlistName, currLikedId], (err) => {
+        if(err) {
+          console.error(err);
+          res.status(400).json({Message: err})
+        }
+
+        res.status(200).json({Message: "Liked Playlist removed"})
+      });
+    });
+  });
+}

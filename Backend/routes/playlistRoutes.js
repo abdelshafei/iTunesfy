@@ -9,7 +9,7 @@ router.get('/removePlaylist/:playlistName/:UserId', authMiddleware, playlistCont
 
 router.get('/ownPlaylist/:listenername', authMiddleware, playlistController.getUserPlaylists);
 
-router.get('/liked-playlists/:listenername', authMiddleware, playlistController.getUserLikedPlaylists);
+router.get('/liked-playlists/:UserId', authMiddleware, playlistController.getUserLikedPlaylists);
 
 router.get('/:playlistName/:UserId', authMiddleware, playlistController.getPlaylistSongs);
 
@@ -18,5 +18,11 @@ router.get('/incPlayCount/:playlistName/:UserId', authMiddleware, playlistContro
 router.get('/addSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.addSong);
 
 router.get('/removeSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.removeSong);
+
+//`${this.apiUrl}/playlists/addToLikedPlaylists/${playlistName}/${UserId}/${localStorage.getItem('UserId')}`
+router.get('/addToLikedPlaylists/:playlistName/:UserId/:LikedUserId', authMiddleware, playlistController.addLikedPlaylist);
+
+//`${this.apiUrl}/playlists/removeFromLikedPlaylists/${playlistName}/${UserId}/${localStorage.getItem('UserId')}`
+router.get('/removeFromLikedPlaylists/:playlistName/:UserId/:LikedUserId', authMiddleware, playlistController.removeLikedPlaylist);
 
 module.exports = router;

@@ -28,6 +28,7 @@ export class DashboardComponent implements OnInit {
     this.search();
     if (this.userRole === 'listener') {
       this.loadListenerData();
+      console.log(this.likedPlaylists)
     } else if (this.userRole === 'artist') {
       this.loadArtistData();
     }
@@ -52,6 +53,9 @@ export class DashboardComponent implements OnInit {
     if (this.userRole === 'listener') {
       this.listenerService.getPlaylists().subscribe(data => {
         this.playlists = data;
+      });
+      this.listenerService.getLikedPlaylists().subscribe(data => {
+        this.likedPlaylists = data;
       });
     }
   }
@@ -92,26 +96,43 @@ export class DashboardComponent implements OnInit {
 
   isOwnedPlaylist(Playlist: any): boolean {
     return this.playlists.some(
-      playlist => (playlist.playlist_name === Playlist.name && playlist.user_id === Playlist.auth)
+      playlist => playlist.playlist_name === Playlist.name && playlist.user_id === Playlist.auth
     );
   }
 
   isPlaylistLiked(playlistName: string, UserId: string): boolean {
     return this.likedPlaylists.some(
-      playlist => playlist.playlist_name === playlistName && playlist.likedUser_id === this.userId && playlist.user_id === UserId
+      playlist => playlist.playlist_name === playlistName && playlist.user_id === UserId
     );
   }
 
+
+
   toggleLike(playlistName: string, user: string): void {
-    // const userId = this.getUserId();
-    // this.listenerService.toggleLike(userId, playlistName).subscribe({
-    //   next: () => {
-    //     if (this.isPlaylistLiked(playlistName)) {
-    //       this.likedPlaylists = this.likedPlaylists.filter(p => p !== playlistName && p !== user);
-    //     } else {
-    //       this.likedPlaylists.push(playlistName);
-    //     }
-    //   }
-    // });
+    
+    const isLiked = this.isPlaylistLiked(playlistName, user)
+
+    if(!isLiked) {
+      // add to liked playlists in the backend
+      this.listenerService.addToLikedPlaylists(playlistName, user).subscribe({
+        next: () => {
+          this.loadListenerData();
+
+        }, 
+        error: (err) => {
+          console.log("playlist Not added to likedPlaylist")
+        }
+      })
+    } else {
+      // remove from liked playlists in the backend 
+      this.listenerService.removeFromLikedPlaylists(playlistName, user).subscribe({
+        next: () => {
+          this.loadListenerData();
+        },
+        error: (err) => {
+          console.log("playlist did not get removed from liked playlists")
+        }
+      })
+    }
   }
 }
