@@ -15,7 +15,9 @@ export class PlaylistDetailComponent {
   songs: any[] = [];
   isPlaying: boolean = false;
   searchTerm: string = '';
-  searchResults: any[] = []
+  searchResults: any[] = [];
+  Like: any = 0;
+  LikeStat: string = ''
 
   constructor(
     private route: ActivatedRoute,
@@ -28,6 +30,7 @@ export class PlaylistDetailComponent {
     this.searchSongs();
     this.playlistName = this.route.snapshot.paramMap.get('playlistName');
     this.userId = this.route.snapshot.paramMap.get('userId');
+    this.getLikes();
     if (this.playlistName) {
       this.loadSongs();
     }
@@ -91,9 +94,21 @@ export class PlaylistDetailComponent {
 
   removeSongs(songId: string): void {
     this.listenerService.removeSongs(songId, this.playlistName!, this.userId!).subscribe({
-      next: (data) => {
+      next: () => {
         this.loadSongs();
         this.searchSongs();
+      },
+      error: (err) => {
+        console.error('Song Adding Failed:', err);
+      }
+    });
+  }
+
+  getLikes(): void {
+    this.listenerService.getLikes(this.playlistName!, this.userId!).subscribe({
+      next: (data) => {
+        this.Like = data;
+        this.LikeStat = this.Like === 1 ? 'Like' : 'Likes';
       },
       error: (err) => {
         console.error('Song Adding Failed:', err);

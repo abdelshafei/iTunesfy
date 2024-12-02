@@ -19,10 +19,11 @@ router.get('/addSong/:songId/:playlistName/:UserId', authMiddleware, playlistCon
 
 router.get('/removeSong/:songId/:playlistName/:UserId', authMiddleware, playlistController.removeSong);
 
-//`${this.apiUrl}/playlists/addToLikedPlaylists/${playlistName}/${UserId}/${localStorage.getItem('UserId')}`
 router.get('/addToLikedPlaylists/:playlistName/:UserId/:LikedUserId', authMiddleware, playlistController.addLikedPlaylist);
 
-//`${this.apiUrl}/playlists/removeFromLikedPlaylists/${playlistName}/${UserId}/${localStorage.getItem('UserId')}`
 router.get('/removeFromLikedPlaylists/:playlistName/:UserId/:LikedUserId', authMiddleware, playlistController.removeLikedPlaylist);
+
+//return this.http.get<any[]>(`${this.apiUrl}/playlists/likesOfPlaylist/${playlistName}/${userId}`, { headers });
+router.get('/likesOfPlaylist/:playlistName/:UserId', authMiddleware, playlistController.getLikeCounter);
 
 module.exports = router;

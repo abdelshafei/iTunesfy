@@ -259,3 +259,26 @@ exports.removeLikedPlaylist = (req, res) => {
     });
   });
 }
+
+exports.getLikeCounter = (req, res) => {
+  const {playlistName, UserId} = req.params
+  console.log(req.params)
+
+  const Query = `
+  SELECT COUNT(*) AS likedCounter
+  FROM Playlist_Like
+  WHERE user_id = ?
+    AND playlist_name = ?
+  `
+
+  db.get(Query, [UserId, playlistName], (err, row) => {
+    if(err) {
+      console.error(err);
+      res.status(400).json({Message: err})
+    }
+
+    console.log(row);
+
+    res.status(200).json(row.likedCounter)
+  })
+}

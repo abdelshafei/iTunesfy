@@ -86,11 +86,67 @@ li {
     overflow-y: auto;
 }
 
-.heading {
-    flex-grow: 0;
+.playlist-header {
+    display: flex;              /* Enable flexbox */
+    padding: 0 10px;            /* Add horizontal padding */
+    height: 40px;               /* Match the height you see in the screenshot */
+    background-color: #f8f8f8;  /* Optional: Background color for styling */
+    border-bottom: 1px solid #ccc; /* Optional: Add a bottom border */
+}
+  
+  /* Left side: playlist name and play button */
+.playlist-info {
+    display: flex;  
+    flex-grow: 0;    
     white-space: nowrap;
+    margin-right: 10px;
+}
+  
+.playlist-name {
+    font-size: 16px;            /* Adjust the font size */
+    font-weight: bold;          /* Optional: Make it bold */
+    margin-right: 10px;         /* Add spacing between name and button */
 }
 
-/* .play-pause-btn {
+.mat-mdc-raised-button {
+    background-color: #8eec72 !important;
 
-} */
+    border-radius: 50%;
+    /* margin-left: 10px; */
+    /* display: flex !important;        
+    align-items: center !important;      
+    justify-items: center !important;  */
+    /* border: none; */
+    width: 10px;
+
+    .mat-icon {
+        margin: auto;
+    }
+
+}
+
+
+
+/* Right side: likes counter */
+.playlist-likes {
+    display: flex;
+}
+
+.playlist-liked:hover {
+    background-color: #000000;
+    cursor: pointer;
+}
+
+.playlist1 {
+    display: flex;   
+    flex-grow: 1;
+}
+
+.likes-count {
+    font-size: 14px;            /* Adjust font size */
+    color: #555;                /* Optional: Add a subtle color */
+}
+
+.mdc-button {
+    min-width: 50px;
+}

@@ -1,11 +1,18 @@
 <div class="playlist-header">
-    <img src="../../assets/playlist-icon.png" class="playlistImg"/>
-    <h2 class="heading"> {{ playlistName }} </h2>
-    <button (click)="togglePlayPause()" class="play-pause-btn">
-        <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
-      </button>
+    <div class="playlist1">
+        <img src="../../assets/playlist-icon.png" class="playlistImg"/>
+        <h2 class="playlist-info"> {{ playlistName }} </h2>
+        <button mat-raised-button (click)="togglePlayPause()" class="play-button">
+            <mat-icon>{{ isPlaying ? 'pause' : 'play_arrow' }}</mat-icon>
+        </button>
+    </div>
+
+    <div class="playlist-likes">
+        <mat-icon style="font-size: 20px;">{{ 'keyboard_double_arrow_left' }}</mat-icon>
+        <span class="likes-count" style="margin-right: 5px"> {{ Like }} </span>
+        <span class="liked-count"> {{ LikeStat }} </span>
+    </div>
 </div>
-<hr style="margin-bottom: 50px;">
 
 <!-- If user owns the playlist -->
 <div *ngIf="userId === currUserId">

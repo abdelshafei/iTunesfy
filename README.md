@@ -27,8 +27,7 @@ SQlite Queries:
 
 Video Demonstration:
 
-    https://youtu.be/zkZztQ0sfmA
-    TODO: NEW video for new implementations
+    https://youtu.be/C5SRlbmjU8E
 
 
 
