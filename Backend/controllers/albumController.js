@@ -3,16 +3,22 @@ const db = require('../config/db');
 exports.getUserAlbum = (req, res) => {
   const artistId  = req.params.artistId;
   
-    // Query to retrieve albums by artist ID
-    const query = `SELECT * FROM Album WHERE authentication_id = ?`;
-    db.all(query, [artistId], (err, rows) => {
-      if (err) {
-        console.error("Database error:", err.message);
-        return res.status(500).json({ message: "Failed to retrieve albums" });
-      }
-  
-      res.status(200).json(rows); // Send back the retrieved albums
-    });
+  // Query to retrieve albums by artist ID
+  const query = `SELECT * FROM Album WHERE authentication_id = ?`;
+  db.all(query, [artistId], (err, rows) => {
+    if (err) {
+      console.error("Database error:", err.message);
+      return res.status(500).json({ message: "Failed to retrieve albums" });
+    }
+
+    res.status(200).json(rows); // Send back the retrieved albums
+  });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.getAlbumSongs = (req, res) => {
@@ -26,6 +32,12 @@ exports.getAlbumSongs = (req, res) => {
     }
     res.status(200).json(rows);
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.getArtistAlbums = (req, res) => {
@@ -39,4 +51,10 @@ exports.getArtistAlbums = (req, res) => {
     }
     res.status(200).json(rows);
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };

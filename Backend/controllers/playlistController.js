@@ -1,9 +1,9 @@
-// router.get('/remove-LikedPlaylist/:listenerId/:', authMiddleware, playlistController.removeUserLikedPlaylists)
-// router.get('/add-LikedPlaylist/:listenerId', authMiddleware, playlistController.addUserLikedPlaylists)
 const db = require('../config/db');
 
 exports.createPlaylist = async (req, res) => {
   const {playlistName, UserId} = req.params;
+
+  let response = ''
 
   const query = `
   INSERT OR IGNORE INTO Playlist(user_id, playlist_name, play_counter) VALUES (?, ?, ?)
@@ -12,12 +12,16 @@ exports.createPlaylist = async (req, res) => {
   db.run(query, [Math.floor(UserId), playlistName, 0], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to add playlist" });
+      response = { message: "Failed to add playlist" };
+      methodLogger(req, response);
+      return res.status(500).json(response);
     }
 
-    res.status(200).json({ message: "Playlist created!" });
-
+    response = { message: "Playlist created!" };
+    res.status(200).json(response);
+    methodLogger(req, response);
   });
+
 };
 
 exports.removePlaylist = async (req, res) => {
@@ -49,12 +53,16 @@ exports.removePlaylist = async (req, res) => {
     });
 
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.getUserPlaylists = async (req, res) => {
   const listenername = req.params.listenername;
-
-  console.log(req.params)
 
   // Query to retrieve albums by artist ID
   const query = `
@@ -71,6 +79,12 @@ exports.getUserPlaylists = async (req, res) => {
 
     res.status(200).json(rows); // Send back the retrieved albums
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.getUserLikedPlaylists = async(req, res) => {
@@ -89,6 +103,12 @@ exports.getUserLikedPlaylists = async(req, res) => {
 
     res.status(200).json(rows);
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.getPlaylistSongs = async(req, res) => {
@@ -109,6 +129,12 @@ exports.getPlaylistSongs = async(req, res) => {
 
     res.status(200).json(rows);
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 
 };
 
@@ -134,6 +160,12 @@ exports.incPlaylistPlayCount = async(req, res) => {
 
     res.status(200).json({message: "play counter updated"});
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 }
 
 exports.addSong = (req, res) => {
@@ -155,6 +187,11 @@ exports.addSong = (req, res) => {
 
   });
 
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.removeSong = (req, res) => {
@@ -178,6 +215,12 @@ exports.removeSong = (req, res) => {
     res.status(200).json({ message: "Playlist updated!" });
 
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };
 
 exports.addLikedPlaylist = (req, res) => {
@@ -208,6 +251,12 @@ exports.addLikedPlaylist = (req, res) => {
       res.status(200).json({Message: "Playlist like added!"});
     });
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 
 
 }
@@ -258,6 +307,12 @@ exports.removeLikedPlaylist = (req, res) => {
       });
     });
   });
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 }
 
 exports.getLikeCounter = (req, res) => {
@@ -281,4 +336,10 @@ exports.getLikeCounter = (req, res) => {
 
     res.status(200).json(row.likedCounter)
   })
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 }

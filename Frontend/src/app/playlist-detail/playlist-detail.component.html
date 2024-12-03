@@ -19,11 +19,11 @@
     <div class="addedSongsBlock">
         <ul>
             <li *ngFor="let song of songs">
-            <div class="song" style="width: 75%;">
-                <img src="../../assets/music-icon.png" class="musicImg"/>  
-                <span class="songName">{{ song.song_title }}</span>
-                <span class="duration"> {{ song.duration | date:'mm:ss' }} </span>
-                <mat-icon matSuffix (click)="removeSongs(song.song_id)">{{ 'do_not_disturb_on' }}</mat-icon>
+                <div class="song" style="width: 75%;">
+                    <img src="../../assets/music-icon.png" class="musicImg"/>  
+                    <span class="songName">{{ song.song_title }}</span>
+                    <span class="duration"> {{ song.duration | date:'mm:ss' }} </span>
+                    <mat-icon matSuffix (click)="removeSongs(song.song_id)">{{ 'do_not_disturb_on' }}</mat-icon>
                 </div>
             </li>
         </ul>

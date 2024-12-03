@@ -11,8 +11,6 @@ exports.register = async (req, res) => {
 
     const { style, authentication_id } = req.body;
 
-    console.log(style, authentication_id)
-
     // Step 1: Validate the authentication_id from the `auth_ids` table
     db.get(
       `SELECT * FROM auth_ids WHERE Auth_id = ?`,
@@ -108,61 +106,64 @@ exports.register = async (req, res) => {
       }
     );
   }
+
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.url);
+  console.log("================================\n");
 };
 
 // User login (for both listeners and artists)
 exports.login = (req, res) => {
-    const { username, password, userType, authentication_id} = req.body;
+  const { username, password, userType, authentication_id} = req.body;
 
-    console.log(req.body)
+  const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
+  if(userType === 'listener') {
+      db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
+          if (err || !user) return res.status(400).json({ message: 'user not found' });
+          // Verify password
+          const validPassword = password === user.password
+          if (!validPassword) return res.status(400).json({ message: 'invalid password' });
 
-    const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
-    if(userType === 'listener') {
-        db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-            if (err || !user) return res.status(400).json({ message: 'Invalid credentials1' });
-            // Verify password
-            const validPassword = password === user.password
-            if (!validPassword) return res.status(400).json({ message: 'Invalid credentials2' });
+          // Generate JWT token
+          const token = jwt.sign(
+              { user_id: user.user_id || user.authentication_id, userType: userType },
+              "secret",
+              { expiresIn: '9h' }
+          );
 
-            // Generate JWT token
-            const token = jwt.sign(
-                { user_id: user.user_id || user.authentication_id, userType: userType },
-                "secret",
-                { expiresIn: '9h' }
-            );
+          const userId = user.user_id
 
-            const userId = user.user_id
+          res.json({ userId, token, message: 'Login successful' });
+      });
+  } else {
+      db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
+          if (err || !user) {
+            return res.status(400).json({ message: 'Artist not found' });
+          }
 
-            res.json({ userId, token, message: 'Login successful' });
-        });
-    } else {
-        db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-            if (err || !user) {
-              console.log("invalid username...");
-              return res.status(400).json({ message: 'Invalid credentials' });
-            }
+          // Verify password & authentication id
+          const validPassword = password === user.password;
+          const validAuthId = authentication_id === user.authentication_id;
+          if(!validPassword || !validAuthId) {
+            return res.status(400).json({ message: 'Invalid password' });
+          }
+          
 
-            // Verify password & authentication id
-            const validPassword = password === user.password;
-            const validAuthId = authentication_id === user.authentication_id;
-            if(!validPassword || !validAuthId) {
-              if(!validPassword) {
-                console.log("incorrect pasword")
-              } else if(!validAuthId) {
-                console.log("invalid auth id")
-              }
-              return res.status(400).json({ message: 'Invalid credentials' });
-            }
-            
+          // Generate JWT token
+          const token = jwt.sign(
+              { user_id: user.user_id || user.authentication_id, userType: userType },
+              "secret",
+              { expiresIn: '9h' }
+          );
+          res.status(200).json({ token, message: 'Login successful' });
+      });
+  }
 
-            // Generate JWT token
-            const token = jwt.sign(
-                { user_id: user.user_id || user.authentication_id, userType: userType },
-                "secret",
-                { expiresIn: '9h' }
-            );
-            console.log("login successful")
-            res.status(200).json({ token, message: 'Login successful' });
-        });
-    }
+  console.log("\nMETHOD LOGGER");
+  console.log("================================");
+  console.log("METHOD: " + req.method);
+  console.log("URL: " + req.originalUrl);
+  console.log("================================\n");
 };

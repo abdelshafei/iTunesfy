@@ -73,6 +73,7 @@ export class DashboardComponent implements OnInit {
       this.listenerService.createPlaylist(this.playlistName!, this.userId!).subscribe({
         next: () => {
           this.loadListenerData();
+          this.search();
         },
         error: (err) => {
           console.error('Playlist Creation went wrong!: ', err);
@@ -87,6 +88,7 @@ export class DashboardComponent implements OnInit {
     this.listenerService.removePlaylist(playlistName, UserId).subscribe({
       next: () => {
         this.loadListenerData();
+        this.search();
       },
       error: (err) => {
         console.error('Playlist deletion went wrong!: ', err);

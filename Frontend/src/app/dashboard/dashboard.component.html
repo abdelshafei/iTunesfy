@@ -67,7 +67,7 @@
     Create Playlist
   </button>
   <!-- expandable div to create playlist -->
-  <div *ngIf="showCreatePlaylist" style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; border-radius: 8px;">
+  <div *ngIf="showCreatePlaylist" style="margin-top: 20px; border: 1px solid #ccc; padding: 15px; border: none;">
     <h3>Create a New Playlist</h3>
     <form (ngSubmit)="createPlaylist()">
       <mat-form-field appearance="outline" style="width: 100%;">

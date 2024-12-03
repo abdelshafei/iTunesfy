@@ -63,7 +63,7 @@ CREATE TABLE IF NOT EXISTS Playlist_Like (
 
 
 CREATE TABLE IF NOT EXISTS Auth_ids (
-    Auth_id  TEXT NOT NULL,
+    Auth_id  TEXT UNIQUE NOT NULL,
     FOREIGN KEY (Auth_id) REFERENCES Artists(authentication_id)
 );
 
