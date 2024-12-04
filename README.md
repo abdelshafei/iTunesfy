@@ -28,8 +28,7 @@ SQlite Queries:
 
 Video Demonstration:
 
-    https://youtu.be/C5SRlbmjU8E
-    ** DO ANOTHER VIDEO WITH UPDATED ER MODEL **
+    https://youtu.be/JBTTAJZrjFo
 
 
 

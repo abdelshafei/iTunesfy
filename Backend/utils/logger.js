@@ -3,7 +3,7 @@ function methodLogger(req, res) {
     console.log("================================");
     console.log("METHOD: " + req.method);
     console.log("URL: " + req.originalUrl);
-    console.log("RESPONSE: " + res);
+    console.log("STATUS CODE: " + res.statusCode)
     console.log("================================\n");
 }
 

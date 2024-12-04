@@ -1,5 +1,6 @@
 const jwt = require('jsonwebtoken');
 const db = require('../config/db');
+const { methodLogger } = require("../utils/logger");
 
 
 // Register a new user (listener or artist)
@@ -18,28 +19,35 @@ exports.register = async (req, res) => {
       (err, validAuthId) => {
         if (err) {
           console.log("Database error: ", err )
-          return res.status(500).json({ message: 'Error validating authentication ID' });
+          res.status(500).json({ message: 'Error validating authentication ID' });
+          methodLogger(req, res);
+          return;
         }
 
         // If the authentication_id is not found in `auth_ids`, it's invalid
-        if (!validAuthId)
-          return res
-            .status(400)
-            .json({ message: 'Authentication ID is invalid. Please use a valid ID.' });
+        if (!validAuthId) {
+          res.status(400).json({ message: 'Authentication ID is invalid. Please use a valid ID.' });
+          methodLogger(req, res);
+          return;
+        }
 
         // Step 2: Check if the authentication_id is already in use by another artist
         db.get(
           `SELECT * FROM Artists WHERE authentication_id = ?`,
           [authentication_id],
           (err, usedAuthId) => {
-            if (err)
-              return res.status(500).json({ message: 'Error checking authentication ID usage' });
+            if (err) {
+              res.status(500).json({ message: 'Error checking authentication ID usage' });
+              methodLogger(req, res);
+              return;
+            }
 
             // If the authentication_id is already in use, return an error
-            if (usedAuthId)
-              return res
-                .status(400)
-                .json({ message: 'Authentication ID is already in use by another artist.' });
+            if (usedAuthId) {
+              res.status(400).json({ message: 'Authentication ID is already in use by another artist.' });
+              methodLogger(req, res);
+              return;
+            }
 
             // Step 3: Register the artist if all checks pass
             db.run(
@@ -47,11 +55,15 @@ exports.register = async (req, res) => {
               VALUES (?, ?, ?, ?, ?, ?)`,
               [userName, authentication_id, email, password, country, style],
               function (err) {
-                if (err)
-                  return res
-                    .status(500)
-                    .json({ message: 'Error registering artist in the database' });
+                if (err){
+                  res.status(500).json({ message: 'Error registering artist in the database' });
+                  methodLogger(req, res);
+                  return;
+                }
+
                 res.status(201).json({ message: 'Artist registered successfully' });
+                methodLogger(req, res);
+                return;
               }
             );
           }
@@ -67,11 +79,15 @@ exports.register = async (req, res) => {
       [userName, email, password, country],
       function (err) {
         if (err) {
-          return res.status(500).json({ message: "Error registering listener." });
+          res.status(500).json({ message: "Error registering listener." });
+          methodLogger(req, res);
+          return;
         }
 
         if (this.change == 0) {
-          return res.status(400).json({ message: "User Name already in use!" });
+          res.status(400).json({ message: "User Name already in use!" });
+          methodLogger(req, res);
+          return;
         }
         
 
@@ -81,7 +97,9 @@ exports.register = async (req, res) => {
           [userName],
           (err, row) => {
             if (err) {
-              return res.status(500).json({ message: "Error retrieving user ID." });
+              res.status(500).json({ message: "Error retrieving user ID." });
+              methodLogger(req, res);
+              return;
             }
 
             const userId = row.user_id;
@@ -93,12 +111,14 @@ exports.register = async (req, res) => {
               function (err) {
                 if (err) {
                   console.log("Database Error: ", err)
-                  return res.status(500).json({ message: "Error creating default playlist." });
+                  res.status(500).json({ message: "Error creating default playlist." });
+                  methodLogger(req, res);
+                  return;
                 }
 
-                return res
-                  .status(201)
-                  .json({ message: "Listener registered successfully" });
+                res.status(201).json({ message: "Listener registered successfully" });
+                methodLogger(req, res);
+                return;
               }
             );
           }
@@ -106,12 +126,6 @@ exports.register = async (req, res) => {
       }
     );
   }
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.url);
-  console.log("================================\n");
 };
 
 // User login (for both listeners and artists)
@@ -121,10 +135,18 @@ exports.login = (req, res) => {
   const tableName = userType === 'artist' ? 'Artists' : 'Listeners';
   if(userType === 'listener') {
       db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-          if (err || !user) return res.status(400).json({ message: 'user not found' });
+          if (err || !user) {
+            res.status(400).json({ message: 'user not found' });
+            methodLogger(req, res);
+            return;
+          }
           // Verify password
           const validPassword = password === user.password
-          if (!validPassword) return res.status(400).json({ message: 'invalid password' });
+          if (!validPassword) {
+            res.status(400).json({ message: 'invalid password' });
+            methodLogger(req, res);
+            return;
+          }
 
           // Generate JWT token
           const token = jwt.sign(
@@ -136,34 +158,37 @@ exports.login = (req, res) => {
           const userId = user.user_id
 
           res.json({ userId, token, message: 'Login successful' });
+          methodLogger(req, res);
+          return;
       });
   } else {
-      db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
-          if (err || !user) {
-            return res.status(400).json({ message: 'Artist not found' });
-          }
+    db.get(`SELECT * FROM ${tableName} WHERE userName = ?`, [username], async (err, user) => {
+      if (err || !user) {
+        res.status(400).json({ message: 'Artist not found' });
+        methodLogger(req, res);
+        return;
+      }
 
-          // Verify password & authentication id
-          const validPassword = password === user.password;
-          const validAuthId = authentication_id === user.authentication_id;
-          if(!validPassword || !validAuthId) {
-            return res.status(400).json({ message: 'Invalid password' });
-          }
-          
+      // Verify password & authentication id
+      const validPassword = password === user.password;
+      const validAuthId = authentication_id === user.authentication_id;
+      if(!validPassword || !validAuthId) {
+        res.status(400).json({ message: 'Invalid password' });
+        methodLogger(req, res);
+        return;
+      }
+      
 
-          // Generate JWT token
-          const token = jwt.sign(
-              { user_id: user.user_id || user.authentication_id, userType: userType },
-              "secret",
-              { expiresIn: '9h' }
-          );
-          res.status(200).json({ token, message: 'Login successful' });
-      });
+      // Generate JWT token
+      const token = jwt.sign(
+        { user_id: user.user_id || user.authentication_id, userType: userType },
+        "secret",
+        { expiresIn: '9h' }
+      );
+      res.status(200).json({ token, message: 'Login successful' });
+      methodLogger(req, res);
+      return;
+    });
   }
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };

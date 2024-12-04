@@ -7,8 +7,6 @@ exports.getSearchTerms = (req, res) => {
   // Add wildcards to the search term for partial matching
   const query = `%${term}%`;
 
-  let response = '';
-
   // SQL query to search across multiple tables with partial matching
   const sql = `
     SELECT 'artist' AS type, userName AS name, style, authentication_id AS auth FROM Artists WHERE userName LIKE ?
@@ -24,24 +22,22 @@ exports.getSearchTerms = (req, res) => {
   db.all(sql, [query, query, query, query], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      response = { message: "Failed to retrieve search results" };
-      methodLogger(req, response);
-      return res.status(500).json({ message: "Failed to retrieve search results" });
+      res.status(500).json({ message: "Failed to retrieve search results" });
+      methodLogger(req, res);
+      return;
     }
 
     // Send back the search results
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
 
-  response = res.rows;
-  methodLogger(req, response);
 };
 
 exports.getSongsForPlaylist = (req, res) => {
   const {playlistName, userId} = req.params
   const searchTerm = `%${req.params.searchTerm}%`;
-
-  let response = ''
 
   const query = `
   SELECT s.*
@@ -57,15 +53,14 @@ exports.getSongsForPlaylist = (req, res) => {
   db.all(query, [playlistName, userId, searchTerm], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      response = { message: "Failed to retrieve search results" };
-      methodLogger(req, response);
-      return res.status(500).json(response);
+      res.status(500).json({ message: "Failed to retrieve search results" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
 
-
-  response = res.rows;
-  methodLogger(req, response);
 }

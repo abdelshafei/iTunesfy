@@ -1,9 +1,8 @@
 const db = require('../config/db');
+const { methodLogger } = require("../utils/logger");
 
 exports.createPlaylist = async (req, res) => {
   const {playlistName, UserId} = req.params;
-
-  let response = ''
 
   const query = `
   INSERT OR IGNORE INTO Playlist(user_id, playlist_name, play_counter) VALUES (?, ?, ?)
@@ -12,14 +11,14 @@ exports.createPlaylist = async (req, res) => {
   db.run(query, [Math.floor(UserId), playlistName, 0], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      response = { message: "Failed to add playlist" };
-      methodLogger(req, response);
-      return res.status(500).json(response);
+      res.status(500).json({ message: "Failed to add playlist" });
+      methodLogger(req, res);
+      return;
     }
 
-    response = { message: "Playlist created!" };
-    res.status(200).json(response);
-    methodLogger(req, response);
+    res.status(200).json({ message: "Playlist created!" });
+    methodLogger(req, res);
+    return;
   });
 
 };
@@ -40,25 +39,24 @@ exports.removePlaylist = async (req, res) => {
   db.run(query1, [Math.floor(UserId), playlistName], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to remove playlist" });
+      res.status(500).json({ message: "Failed to remove playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     db.run(query2, [Math.floor(UserId), playlistName], (err) => {
       if (err) {
         console.error("Database error:", err.message);
-        return res.status(500).json({ message: "Failed to remove playlist" });
+        res.status(500).json({ message: "Failed to remove playlist" });
+        methodLogger(req, res);
+        return;
       }
 
       res.status(200).json({ message: "Playlist removed." });
+      methodLogger(req, res);
+      return;
     });
-
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.getUserPlaylists = async (req, res) => {
@@ -74,17 +72,15 @@ exports.getUserPlaylists = async (req, res) => {
   db.all(query, [listenername], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to retrieve playlist" });
+      res.status(500).json({ message: "Failed to retrieve playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json(rows); // Send back the retrieved albums
+    methodLogger(req, res);
+    return;
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.getUserLikedPlaylists = async(req, res) => {
@@ -98,17 +94,15 @@ exports.getUserLikedPlaylists = async(req, res) => {
   db.all(query, userId, (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to retrieve Liked playlist" });
+      res.status(500).json({ message: "Failed to retrieve Liked playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.getPlaylistSongs = async(req, res) => {
@@ -124,17 +118,15 @@ exports.getPlaylistSongs = async(req, res) => {
   db.all(query, [Math.floor(UserId), playlistName], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to retrieve playlist" });
+      res.status(500).json({ message: "Failed to retrieve playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 
 };
 
@@ -149,23 +141,24 @@ exports.incPlaylistPlayCount = async(req, res) => {
   db.run(query, [UserId, playlistName], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to increment playlist play counter" });
+      res.status(500).json({ message: "Failed to increment playlist play counter" });
+      methodLogger(req, res);
+      return;
     }
 
     if (this.change == 0) {
       console.log("no changes")
-      return res.status(400).json({ message: "no play counter has updated!" });
+      res.status(400).json({ message: "no play counter has updated!" });
+      methodLogger(req, res);
+      return;
     }
 
 
     res.status(200).json({message: "play counter updated"});
+    methodLogger(req, res);
+    return;
   });
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 }
 
 exports.addSong = (req, res) => {
@@ -176,22 +169,21 @@ exports.addSong = (req, res) => {
   db.run(query, [songId, Math.floor(UserId), playlistName], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to add to playlist" });
+      res.status(500).json({ message: "Failed to add to playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     if (this.change == 0) {
-      return res.status(400).json({ message: "playlist has not been updated!" });
+      res.status(400).json({ message: "playlist has not been updated!" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json({ message: "Playlist updated!" });
-
+    methodLogger(req, res);
+    return;
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.removeSong = (req, res) => {
@@ -205,22 +197,23 @@ exports.removeSong = (req, res) => {
   db.run(query, [Math.floor(songId), playlistName, Math.floor(UserId)], (err) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to remove from playlist" });
+      res.status(500).json({ message: "Failed to remove from playlist" });
+      methodLogger(req, res);
+      return;
     }
 
     if (this.change == 0) {
-      return res.status(400).json({ message: "playlist has not been updated!" });
+      res.status(400).json({ message: "playlist has not been updated!" });
+      methodLogger(req, res);
+      return;
     }
 
-    res.status(200).json({ message: "Playlist updated!" });
+    res.status(200).json({ message: "Playlist updated!" });      
+    methodLogger(req, res);
+    return;
 
   });
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.addLikedPlaylist = (req, res) => {
@@ -237,7 +230,9 @@ exports.addLikedPlaylist = (req, res) => {
   db.get(nextLikedIdQuery, [UserId, playlistName], (err, row) => {
     if(err) {
       console.error(err);
-      res.status(400).json({Message: err})
+      res.status(400).json({Message: err});
+      methodLogger(req, res);
+      return;
     }
 
     const nextLikedId = row.nextLikedId;
@@ -245,19 +240,16 @@ exports.addLikedPlaylist = (req, res) => {
     db.run(insertQuery, [UserId, playlistName, nextLikedId, LikedUserId], (err) => {
       if(err) {
         console.error(err);
-        res.status(400).json({Message: err})
+        res.status(400).json({Message: err});
+        methodLogger(req, res);
+        return;
       }
 
       res.status(200).json({Message: "Playlist like added!"});
+      methodLogger(req, res);
+      return;
     });
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
-
 
 }
 
@@ -285,39 +277,40 @@ exports.removeLikedPlaylist = (req, res) => {
   db.get(currLikedIdQuery, [Math.floor(UserId), playlistName, Math.floor(LikedUserId)], (err, row) => {
     if(err) {
       console.error(err);
-      res.status(400).json({Message: err})
+      res.status(400).json({Message: err});
+      methodLogger(req, res);
+      return;
     }
 
     const currLikedId = row.Liked_id
-    console.log(currLikedId)
 
     db.run(DeleteQuery, [Math.floor(UserId), playlistName, Math.floor(LikedUserId)], (err) => {
       if(err) {
         console.error(err);
-        res.status(400).json({Message: err})
+        res.status(400).json({Message: err});
+        methodLogger(req, res);
+        return;
       }
 
       db.run(updateLikedIdsQuery, [Math.floor(UserId), playlistName, Math.floor(currLikedId)], (err) => {
         if(err) {
           console.error(err);
-          res.status(400).json({Message: err})
+          res.status(400).json({Message: err});
+          methodLogger(req, res);
+          return;
         }
 
-        res.status(200).json({Message: "Liked Playlist removed"})
+        res.status(200).json({Message: "Liked Playlist removed"});
+        methodLogger(req, res);
+        return;
       });
     });
   });
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 }
 
 exports.getLikeCounter = (req, res) => {
   const {playlistName, UserId} = req.params
-  console.log(req.params)
 
   const Query = `
   SELECT COUNT(*) AS likedCounter
@@ -330,16 +323,13 @@ exports.getLikeCounter = (req, res) => {
     if(err) {
       console.error(err);
       res.status(400).json({Message: err})
+      methodLogger(req, res);
+      return;
     }
 
-    console.log(row);
-
-    res.status(200).json(row.likedCounter)
+    res.status(200).json(row.likedCounter);
+    methodLogger(req, res);
+    return;
   })
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 }

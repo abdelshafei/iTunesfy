@@ -1,4 +1,5 @@
 const db = require('../config/db');
+const { methodLogger } = require("../utils/logger");
 
 exports.getUserAlbum = (req, res) => {
   const artistId  = req.params.artistId;
@@ -8,17 +9,15 @@ exports.getUserAlbum = (req, res) => {
   db.all(query, [artistId], (err, rows) => {
     if (err) {
       console.error("Database error:", err.message);
-      return res.status(500).json({ message: "Failed to retrieve albums" });
+      res.status(500).json({ message: "Failed to retrieve albums" });
+      methodLogger(req, res);
+      return;
     }
 
     res.status(200).json(rows); // Send back the retrieved albums
+    methodLogger(req, res);
+    return;
   });
-
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.getAlbumSongs = (req, res) => {
@@ -28,16 +27,15 @@ exports.getAlbumSongs = (req, res) => {
   db.all(query, [albumId], (err, rows) => {
     if (err) {
       console.error('Database error:', err.message);
-      return res.status(500).json({ message: 'Failed to fetch songs.' });
+      res.status(500).json({ message: 'Failed to fetch songs.' });
+      methodLogger(req, res);
+      return;
     }
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
 
 exports.getArtistAlbums = (req, res) => {
@@ -47,14 +45,13 @@ exports.getArtistAlbums = (req, res) => {
   db.all(query, [artistId], (err, rows) => {
     if(err) {
       console.error('Database error:', err.message);
-      return res.status(500).json({ message: 'Failed to fetch albums.' });
+      res.status(500).json({ message: 'Failed to fetch albums.' });
+      methodLogger(req, res);
+      return;
     }
     res.status(200).json(rows);
+    methodLogger(req, res);
+    return;
   });
 
-  console.log("\nMETHOD LOGGER");
-  console.log("================================");
-  console.log("METHOD: " + req.method);
-  console.log("URL: " + req.originalUrl);
-  console.log("================================\n");
 };
