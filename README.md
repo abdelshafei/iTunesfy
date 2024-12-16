@@ -2,12 +2,6 @@
 
 Web-baseed interactive database inspired by streaming-services such as iTunes, spotify, etc.
 
-    Student Name: Abdelrahman ElShafay
-    Student #: 101279725
-
-I attest that I am the sole author of this summitted work and any code borrowed from other sources has been identified by comments placed in my submitted code.
-Abdelrahman ElShafay, 101279725
-
 Sqlite Database:
 
     Name:- ITunesify.db
