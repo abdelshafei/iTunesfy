@@ -1,6 +1,6 @@
 # iTunesfy
 
-Web-baseed interactive database inspired by streaming-services such as iTunes, spotify, etc.
+Web-based interactive database inspired by streaming-services such as iTunes, spotify, etc.
 
 Sqlite Database:
 

@@ -1,6 +1,6 @@
-<h2> Do you already have an account?</h2>
+<h2> Do you already have a {{ userRole | titlecase }} account?</h2>
 <hr>
 <div id="container">
-<button mat-raised-button (click)="goToRegister()">Register as {{ userRole | titlecase }}</button>
-<button mat-raised-button (click)="goToLogin()">Login as {{ userRole | titlecase }}</button>
+<button mat-raised-button (click)="goToRegister()">Register</button>
+<button mat-raised-button (click)="goToLogin()">Login</button>
 </div>

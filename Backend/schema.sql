@@ -14,6 +14,7 @@ CREATE TABLE IF NOT EXISTS Artists (
     password TEXT NOT NULL,
     country TEXT NOT NULL,
     style TEXT, 
+    -- img_url TEXT,
     PRIMARY KEY(authentication_id)
 );
 
@@ -22,6 +23,7 @@ CREATE TABLE IF NOT EXISTS Song (
     song_title TEXT NOT NULL,
     duration INTEGER NOT NULL,
     album_id INTEGER NOT NULL,
+    -- img_url TEXT,
     PRIMARY KEY(song_id),
     FOREIGN KEY (album_id) REFERENCES Album(album_id)
 );
@@ -30,6 +32,7 @@ CREATE TABLE IF NOT EXISTS Album (
     album_id INTEGER UNIQUE NOT NULL,
     album_title TEXT NOT NULL,
     authentication_id TEXT NOT NULL,
+    -- img_url TEXT,
     PRIMARY KEY(album_id)
     FOREIGN KEY (authentication_id) REFERENCES Artists(authentication_id)
 );
