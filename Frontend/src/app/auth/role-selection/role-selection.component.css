@@ -1,45 +1,63 @@
-hr {
-    margin-bottom: 50px
-}
-
-#container {
-    display: flex; /* Make it a flex container */
-    justify-content: center; /* Center horizontally */
-    align-items: center; /* Center vertically */
-    padding: 100px 0;
-    height: 100%;
-}
-
-button {
-    border-radius: 15px;
-    border: none;
-    font-weight: bold;
-    cursor: pointer;
-    margin-right: 100px;
-    margin-left: 100px;
-    text-align: center;
-}
-
-.mat-mdc-raised-button {
-    background-color: red !important;
-
-    .mdc-button__label {
-        color: white;
-    }
-    
+body {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-color: #333;
 }
 
 h2 {
     text-align: center;
+    margin: 0;
+    padding-top: 20px;
+    font-size: 2.5rem;
+    font-family:fantasy;
+    animation: fadeIn 1s ease-in-out;
 }
 
-@keyframes fadeIn {
-    from {
-      opacity: 0;
-      transform: scale(0.95);
-    }
-    to {
-      opacity: 1;
-      transform: scale(1);
-    }
+hr {
+    width: 80%;
+    margin: 20px auto 40px auto;
+    border: 0;
+    height: 2px;
+    background: #ddd;
+    transform-origin: center; /* Set animation origin to center */
+    animation: fadeLine 1s ease-in-out forwards; /* Add the animation */
+}
+
+#container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 30px; /* Spacing between buttons */
+    flex-grow: 1;
+    width: 100%;
+    flex-wrap: wrap; /* Allows wrapping for smaller screens */
+    padding: 20px;
+    margin-top: 400px;
+}
+
+/* Buttons */
+button {
+    border-radius: 25px;
+    border: none;
+    font-weight: bold;
+    font-size: 1.2rem;
+    cursor: pointer;
+    padding: 15px 40px;
+    transition: transform 0.3s, box-shadow 0.3s, background-color 0.3s;
+    background-color: #ff8a80; /* Soft pastel red */
+    color: white;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
+}
+
+button:hover {
+    background-color: #ff5252; /* Slightly stronger red on hover */
+    transform: scale(1.1);
+    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.3);
+}
+
+button:active {
+    transform: scale(1);
+    box-shadow: 0 3px 5px rgba(0, 0, 0, 0.2);
 }

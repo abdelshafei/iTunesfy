@@ -8,6 +8,8 @@ import { Router } from '@angular/router';
   styleUrls: ['./register.component.css']
 })
 export class RegisterComponent {
+  hide = true;
+
   userRole: string | null = localStorage.getItem('userRole');
   userName: String = '';
   email: String = '';
@@ -15,6 +17,7 @@ export class RegisterComponent {
   country: String = '';
   style : String = ''; // Only for artists
   authentication_id : String = ''; //Only for artists
+  passwordFieldType: string = 'password';
 
   constructor(private authService: AuthService, private router: Router) {}
 
@@ -42,5 +45,9 @@ export class RegisterComponent {
         alert('Registration failed');
       }
     });
+  }
+
+  togglePasswordVisibility() {
+    this.passwordFieldType = this.passwordFieldType === 'password' ? 'text' : 'password';
   }
 }

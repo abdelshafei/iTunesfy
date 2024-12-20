@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { Router } from '@angular/router';
 
 @Component({
@@ -8,6 +9,7 @@ import { Router } from '@angular/router';
 })
 export class AuthChoiceComponent {
   userRole: string | null = localStorage.getItem('userRole'); // Retrieve the role
+  i = 0;
 
   constructor(private router: Router) {}
 

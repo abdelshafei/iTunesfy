@@ -5,7 +5,6 @@ const playlistRoutes = require('./routes/playlistRoutes');
 const itunesRoute = require('./routes/itunesRoute');
 const albumRoutes = require('./routes/albumRoutes');
 const searchRoutes = require('./routes/searchRoutes');
-const db = require('./config/db');
 
 const { fetchAndSaveItunesData } = require('./controllers/itunesFetchController');
 
