@@ -1,7 +1,5 @@
 # iTunesfy
 
-Web-based interactive database inspired by streaming-services such as iTunes, spotify, etc.
-
 Sqlite Database:
 
     Name:- ITunesify.db
