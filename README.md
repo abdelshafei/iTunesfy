@@ -1,6 +1,6 @@
 # iTunesfy
 
-Sqlite Database:
+SQLite Database:
 
     Name:- ITunesify.db
     Path:- ITunesfy/Backend/ITunesify.db
@@ -12,11 +12,15 @@ Installing node_modules & Launching the project:
 
 Angular Version:
 
-    The Angular CLI version i am using on this project is 16.2.1, so maybe try to install/update Angular upto this version or beyond to run this project.
+    The Angular CLI version I am using on this project is 16.2.1, so maybe try to install/update Angular up to this version or beyond to run this project.
 
 SQlite Queries:
 
-    All of my sqlite queries are in the Controllers folder of the backend folder
+    All of my SQLite queries are in the Controllers folder of the backend folder
+
+Demonstration:
+
+    https://youtu.be/JBTTAJZrjFo
 
 
 
